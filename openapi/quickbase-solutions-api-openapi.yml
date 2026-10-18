@@ -1,0 +1,709 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Solutions API
+  version: 1.0.0
+  description: 'Operations tagged Solutions across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Solutions
+paths:
+  /solutions/{solutionId}:
+    get:
+      tags:
+      - Solutions
+      summary: Export a solution
+      description: 'Returns the QBL for the specified solution. Learn more about QBL syntax.
+
+        We are releasing schema coverage for QBL in stages. See what''s supported today in our QBL documentation.'
+      operationId: exportSolution
+      parameters:
+      - $ref: '#/components/parameters/pathSolutionId'
+      - $ref: '#/components/parameters/qblVersion'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-yaml:
+              schema:
+                type: string
+                description: YAML-formatted QBL for the solution
+                example: "Solution:\n  Id: 8d2c3333-7d32-4ece-8073-57106c465384\n  Name: Example solution\n  Owner: manager@yourrealm.com\n  ExportDate: 2024-03-25 12:04:05\nVersion: 0.2\nResources:\n  $App_Example_app:\n    Type: QB::Application\n    Properties:\n      Name: Example app\n      Description: \n      AppColor: '#72509a'\n      Manager: manager@yourrealm.com\n      TableOrder: []\n      AppIcon: Application\n      CurrencySymbol: $\n      FiscalYearDesignation: Last\n      FirstDayOfWeek: Sun\n      DateFormat: MM-DD-YYYY\n      FirstMonthOfFiscalYear: Jan\n      CurrencySymbolPosition: Between\n      NumberFormat:\n        SeparatorStyle: CommaGroupingPeriodDecimal\n        SeparatorPlaces: none\n      DefaultViewMode: Auto\n      HideNewUpdatedIcons: false\n      DisableAllUsersSelection: false\n      CanCopyApp: Admin\n      CanExportData: Everyone\n      Searchable: false\n      RequireAppToken: true\n      ShowPerformanceBar: false\n      ShowPerformanceAnalyzer: false\n      GlobalSearchExactMatch: false\n      Utf8DataEncoding: false\n      Timezone: Default\n      Branding:\n        AppHeader:\n          HideQuickbaseStandardMenu: false\n        AppFooter: {}\n      RoleOrder:\n        - !Ref\n          Role: $Role_Viewer\n        - !Ref\n          Role: $Role_Participant\n        - !Ref\n          Role: $Role_Administrator\n    Roles:\n      $Role_Viewer:\n        Type: QB::Application::Role\n        Properties:\n          Name: Viewer\n          Description: \n          Default: false\n          ManageUsers: false\n          EditApp: false\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false\n      $Role_Participant:\n        Type: QB::Application::Role\n        Properties:\n          Name: Participant\n          Description: \n          Default: true\n          ManageUsers: true\n          EditApp: false\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false\n      $Role_Administrator:\n        Type: QB::Application::Role\n        Properties:\n          Name: Administrator\n          Description: \n          Default: false\n          ManageUsers: true\n          EditApp: true\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false"
+        '400':
+          $ref: '#/components/responses/solutionBadRequest'
+        '401':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '403':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '404':
+          $ref: '#/components/responses/solutionNotFound'
+        5XX:
+          $ref: '#/components/responses/solutionUnexpectedError'
+    put:
+      tags:
+      - Solutions
+      summary: Update a solution
+      description: 'Updates the solution using the provided QBL. Learn more about QBL syntax.
+
+        We are releasing schema coverage for QBL in stages. See what''s supported today in our QBL documentation.'
+      operationId: updateSolution
+      parameters:
+      - $ref: '#/components/parameters/pathSolutionId'
+      - $ref: '#/components/parameters/xQblErrorsAsSuccess'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: The QBL to be used for the update.
+        required: true
+        content:
+          application/x-yaml:
+            example: "Version: 0.2\nResources:\n  $App_Example_app:\n    Type: QB::Application\n    Properties:\n      Name: Example app\n      Description: \n      AppColor: '#72509a'\n      Manager: manager@yourrealm.com\n      TableOrder: []\n      AppIcon: Application\n      CurrencySymbol: $\n      FiscalYearDesignation: Last\n      FirstDayOfWeek: Sun\n      DateFormat: MM-DD-YYYY\n      FirstMonthOfFiscalYear: Jan\n      CurrencySymbolPosition: Between\n      NumberFormat:\n        SeparatorStyle: CommaGroupingPeriodDecimal\n        SeparatorPlaces: none\n      DefaultViewMode: Auto\n      HideNewUpdatedIcons: false\n      DisableAllUsersSelection: false\n      CanCopyApp: Admin\n      CanExportData: Everyone\n      Searchable: false\n      RequireAppToken: true\n      ShowPerformanceBar: false\n      ShowPerformanceAnalyzer: false\n      GlobalSearchExactMatch: false\n      Utf8DataEncoding: false\n      Timezone: Default\n      Branding:\n        AppHeader:\n          HideQuickbaseStandardMenu: false\n        AppFooter: {}\n      RoleOrder:\n        - !Ref\n          Role: $Role_Viewer\n        - !Ref\n          Role: $Role_Participant\n        - !Ref\n          Role: $Role_Administrator\n    Roles:\n      $Role_Viewer:\n        Type: QB::Application::Role\n        Properties:\n          Name: Viewer\n          Description: \n          Default: false\n          ManageUsers: false\n          EditApp: false\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false\n      $Role_Participant:\n        Type: QB::Application::Role\n        Properties:\n          Name: Participant\n          Description: \n          Default: true\n          ManageUsers: true\n          EditApp: false\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false\n      $Role_Administrator:\n        Type: QB::Application::Role\n        Properties:\n          Name: Administrator\n          Description: \n          Default: false\n          ManageUsers: true\n          EditApp: true\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  solutionId:
+                    type: string
+                    description: The unique identifier (UUID) of the updated solution
+                    example: f53acd36-1e75-47ed-910c-0ca4fd165a84
+                  alias:
+                    type:
+                    - string
+                    - 'null'
+                    description: The optional alias for the solution
+                  createdResources:
+                    type: object
+                    description: Information about resources created or updated in the solution
+                  warnings:
+                    type: array
+                    description: Any warnings that occurred during solution update
+                    items:
+                      type: string
+                example:
+                  solutionId: 097aefef-113a-4fc1-9c78-3ecb1003b95c
+                  alias: null
+                  createdResources:
+                    apps: {}
+                  warnings: []
+        '400':
+          $ref: '#/components/responses/solutionBadRequest'
+        '401':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '403':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '404':
+          $ref: '#/components/responses/solutionNotFound'
+        '415':
+          $ref: '#/components/responses/solutionUnsupportedMediaType'
+        5XX:
+          $ref: '#/components/responses/solutionUnexpectedError'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /solutions:
+    post:
+      tags:
+      - Solutions
+      summary: Create a solution
+      description: 'Creates a solution using the provided QBL. Learn more about QBL syntax.
+
+        We are releasing schema coverage for QBL in stages. See what''s supported today in our QBL documentation.'
+      operationId: createSolution
+      parameters:
+      - $ref: '#/components/parameters/queryAlias'
+      - $ref: '#/components/parameters/xQblErrorsAsSuccess'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: The QBL to be used for the create.
+        required: true
+        content:
+          application/x-yaml:
+            example: "Version: 0.2\nResources:\n  $App_Example_app:\n    Type: QB::Application\n    Properties:\n      Name: Example app\n      Description: \n      AppColor: '#72509a'\n      Manager: manager@yourrealm.com\n      TableOrder: []\n      AppIcon: Application\n      CurrencySymbol: $\n      FiscalYearDesignation: Last\n      FirstDayOfWeek: Sun\n      DateFormat: MM-DD-YYYY\n      FirstMonthOfFiscalYear: Jan\n      CurrencySymbolPosition: Between\n      NumberFormat:\n        SeparatorStyle: CommaGroupingPeriodDecimal\n        SeparatorPlaces: none\n      DefaultViewMode: Auto\n      HideNewUpdatedIcons: false\n      DisableAllUsersSelection: false\n      CanCopyApp: Admin\n      CanExportData: Everyone\n      Searchable: false\n      RequireAppToken: true\n      ShowPerformanceBar: false\n      ShowPerformanceAnalyzer: false\n      GlobalSearchExactMatch: false\n      Utf8DataEncoding: false\n      Timezone: Default\n      Branding:\n        AppHeader:\n          HideQuickbaseStandardMenu: false\n        AppFooter: {}\n      RoleOrder:\n        - !Ref\n          Role: $Role_Viewer\n        - !Ref\n          Role: $Role_Participant\n        - !Ref\n          Role: $Role_Administrator\n    Roles:\n      $Role_Viewer:\n        Type: QB::Application::Role\n        Properties:\n          Name: Viewer\n          Description: \n          Default: false\n          ManageUsers: false\n          EditApp: false\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false\n      $Role_Participant:\n        Type: QB::Application::Role\n        Properties:\n          Name: Participant\n          Description: \n          Default: true\n          ManageUsers: true\n          EditApp: false\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false\n      $Role_Administrator:\n        Type: QB::Application::Role\n        Properties:\n          Name: Administrator\n          Description: \n          Default: false\n          ManageUsers: true\n          EditApp: true\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                solutionId: 097aefef-113a-4fc1-9c78-3ecb1003b95c
+                alias: null
+                createdResources:
+                  apps: {}
+                warnings: []
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/solutionBadRequest'
+        '401':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '403':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '415':
+          $ref: '#/components/responses/solutionUnsupportedMediaType'
+        5XX:
+          $ref: '#/components/responses/solutionUnexpectedError'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /solutions/{solutionId}/torecord:
+    get:
+      tags:
+      - Solutions
+      summary: Export solution to record
+      description: 'Exports the solution and outputs the resulting QBL in a new record in the specified table. The QBL will be saved to a file in the file attachment field that is specified. The table cannot have any required fields besides the file attachment field.
+
+        We are releasing schema coverage for QBL in stages. See what''s supported today in our QBL documentation.'
+      operationId: exportSolutionToRecord
+      parameters:
+      - $ref: '#/components/parameters/pathSolutionId'
+      - $ref: '#/components/parameters/queryTableId'
+      - name: fieldId
+        in: query
+        description: The unique identifier (fid) of the field. It needs to be a file attachment field.
+        required: true
+        schema:
+          type: integer
+        example: 8
+      - $ref: '#/components/parameters/xQblErrorsAsSuccess'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/qblVersion'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                record_id: 1
+                filename: QBL-0.4-30d92a39-5940-49b6-9eb1-c2966f85a7c0.yaml
+        '400':
+          $ref: '#/components/responses/solutionBadRequest'
+        '401':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '403':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '404':
+          $ref: '#/components/responses/solutionOrFieldNotFound'
+        5XX:
+          $ref: '#/components/responses/solutionUnexpectedError'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /solutions/fromrecord:
+    get:
+      tags:
+      - Solutions
+      summary: Create solution from record
+      description: 'Creates a solution using the QBL from the specified record.
+
+        We are releasing schema coverage for QBL in stages. See what''s supported today in our QBL documentation.'
+      operationId: createSolutionFromRecord
+      parameters:
+      - $ref: '#/components/parameters/queryAlias'
+      - $ref: '#/components/parameters/queryTableId'
+      - name: fieldId
+        in: query
+        description: The unique identifier (fid) of the field. It needs to be a file attachment field.
+        required: true
+        schema:
+          type: integer
+        example: 8
+      - name: recordId
+        in: query
+        description: The unique identifier of the record.
+        required: true
+        schema:
+          type: integer
+        example: 1
+      - $ref: '#/components/parameters/xQblErrorsAsSuccess'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                solutionId: f53acd36-1e75-47ed-910c-0ca4fd165a84
+                alias: null
+                createdResources:
+                  apps:
+                    $App_IT_Total_Management: bt6i6jc39
+                  pipelines: {}
+                warnings: []
+        '400':
+          $ref: '#/components/responses/solutionBadRequest'
+        '401':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '403':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '404':
+          $ref: '#/components/responses/solutionFieldOrRecordNotFound'
+        5XX:
+          $ref: '#/components/responses/solutionUnexpectedError'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /solutions/{solutionId}/fromrecord:
+    get:
+      tags:
+      - Solutions
+      summary: Update solution from record
+      description: 'Updates a solution using the QBL from the specified record.
+
+        We are releasing schema coverage for QBL in stages. See what''s supported today in our QBL documentation.'
+      operationId: updateSolutionFromRecord
+      parameters:
+      - $ref: '#/components/parameters/pathSolutionId'
+      - $ref: '#/components/parameters/queryTableId'
+      - name: fieldId
+        in: query
+        description: The unique identifier (fid) of the field. It needs to be a file attachment field.
+        required: true
+        schema:
+          type: integer
+        example: 8
+      - name: recordId
+        in: query
+        description: The unique identifier of the record.
+        required: true
+        schema:
+          type: integer
+        example: 1
+      - $ref: '#/components/parameters/xQblErrorsAsSuccess'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                solutionId: acfa89a2-5ec0-4552-ba69-1372e41288ea
+                alias: null
+                resources:
+                  apps:
+                    $App_IT_Total_Management: bt6i6jc39
+                  pipelines: {}
+                warnings: []
+        '400':
+          $ref: '#/components/responses/solutionBadRequest'
+        '401':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '403':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '404':
+          $ref: '#/components/responses/solutionFieldOrRecordNotFound'
+        5XX:
+          $ref: '#/components/responses/solutionUnexpectedError'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /solutions/{solutionId}/changeset:
+    put:
+      tags:
+      - Solutions
+      summary: List solution changes
+      description: 'Returns a list of changes that would occur if the provided QBL were to be applied to the solution, without actually making those changes. This is useful for validating changes or previewing the impact before updating a solution. Learn more about QBL syntax.
+
+        We are releasing schema coverage for QBL in stages. See what''s supported today in our QBL documentation.'
+      operationId: changesetSolution
+      parameters:
+      - $ref: '#/components/parameters/pathSolutionId'
+      - $ref: '#/components/parameters/xQblErrorsAsSuccess'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: The QBL to be used for the changeset.
+        required: true
+        content:
+          application/x-yaml:
+            example: "Version: 0.4\nResources:\n  $App_Example_app:\n    Type: QB::Application\n    Properties:\n      Name: Example app\n      Description: \n      AppColor: '#72509a'\n      Manager: manager@yourrealm.com\n      TableOrder: []\n      AppIcon: Application\n      CurrencySymbol: $\n      FiscalYearDesignation: Last\n      FirstDayOfWeek: Sun\n      DateFormat: MM-DD-YYYY\n      FirstMonthOfFiscalYear: Jan\n      CurrencySymbolPosition: Between\n      NumberFormat:\n        SeparatorStyle: CommaGroupingPeriodDecimal\n        SeparatorPlaces: none\n      DefaultViewMode: Auto\n      HideNewUpdatedIcons: false\n      DisableAllUsersSelection: false\n      CanCopyApp: Admin\n      CanExportData: Everyone\n      Searchable: false\n      RequireAppToken: true\n      ShowPerformanceBar: false\n      ShowPerformanceAnalyzer: false\n      GlobalSearchExactMatch: false\n      Utf8DataEncoding: false\n      Timezone: Default\n      Branding:\n        AppHeader:\n          HideQuickbaseStandardMenu: false\n        AppFooter: {}\n      RoleOrder:\n        - !Ref\n          Role: $Role_Viewer\n        - !Ref\n          Role: $Role_Participant\n        - !Ref\n          Role: $Role_Administrator\n    Roles:\n      $Role_Viewer:\n        Type: QB::Application::Role\n        Properties:\n          Name: Viewer\n          Description: \n          Default: false\n          ManageUsers: false\n          EditApp: false\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false\n      $Role_Participant:\n        Type: QB::Application::Role\n        Properties:\n          Name: Participant\n          Description: \n          Default: true\n          ManageUsers: true\n          EditApp: false\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false\n      $Role_Administrator:\n        Type: QB::Application::Role\n        Properties:\n          Name: Administrator\n          Description: \n          Default: false\n          ManageUsers: true\n          EditApp: true\n          DisableAccess: false\n          AppUI:\n            HideSettings: false\n            HideUsers: false\n            HideFavorites: false\n            HideSearch: false\n            HideHelp: false\n            HideTestAs: false\n          TableUI:\n            Global:\n              HideInBar: false\n              HideNewRecord: false\n              HideGridEdit: false\n              HideEmail: false\n              HidePrint: false\n              HideImportExport: false\n              HideSaveSpreadsheet: false\n              HideCreateCustomizeReport: false\n              HidePersonalSettings: false"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: f53acd36-1e75-47ed-910c-0ca4fd165a84
+                changes:
+                - logicalType: App
+                  logicalId: $App_Example_app
+                  action: Add
+                  path:
+                  - $App_Example_app
+                - logicalType: App
+                  logicalId: $App_Simple_Project_Manager
+                  action: Remove
+                  path:
+                  - $App_Simple_Project_Manager
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/solutionBadRequest'
+        '401':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '403':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '404':
+          $ref: '#/components/responses/solutionNotFound'
+        '415':
+          $ref: '#/components/responses/solutionUnsupportedMediaType'
+        5XX:
+          $ref: '#/components/responses/solutionUnexpectedError'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /solutions/{solutionId}/changeset/fromrecord:
+    get:
+      tags:
+      - Solutions
+      summary: List solution changes from record
+      description: 'Returns a list of changes that would occur if the QBL from the provided record were to be applied.
+
+        We are releasing schema coverage for QBL in stages. See what''s supported today in our QBL documentation.'
+      operationId: changesetSolutionFromRecord
+      parameters:
+      - $ref: '#/components/parameters/pathSolutionId'
+      - $ref: '#/components/parameters/queryTableId'
+      - name: fieldId
+        in: query
+        description: The unique identifier (fid) of the field. It needs to be a file attachment field.
+        required: true
+        schema:
+          type: integer
+        example: 8
+      - name: recordId
+        in: query
+        description: The unique identifier of the record.
+        required: true
+        schema:
+          type: integer
+        example: 1
+      - $ref: '#/components/parameters/xQblErrorsAsSuccess'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: f53acd36-1e75-47ed-910c-0ca4fd165a84
+                changes:
+                - logicalType: Property
+                  logicalId: App::$App_MVP_App_234::Property::Name
+                  action: Update
+                  path:
+                  - $App_MVP_App_234
+                  - Name
+                - logicalType: Table
+                  logicalId: $Table_Parents
+                  action: Remove
+                  path:
+                  - $App_MVP_App_234
+                  - $Table_Parents
+                - logicalType: Table
+                  logicalId: $Table_Children
+                  action: Remove
+                  path:
+                  - $App_MVP_App_234
+                  - $Table_Children
+        '400':
+          $ref: '#/components/responses/solutionBadRequest'
+        '401':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '403':
+          $ref: '#/components/responses/solutionInsufficientAccess'
+        '404':
+          $ref: '#/components/responses/solutionFieldOrRecordNotFound'
+        5XX:
+          $ref: '#/components/responses/solutionUnexpectedError'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /solutions/{solutionId}/resources:
+    get:
+      tags:
+      - Solutions
+      summary: Get solution information
+      description: Returns the metadata and resource information for a solution, including both real and logical IDs of apps and pipelines contained within the solution. This endpoint provides programmatic access to solution structure information.
+      operationId: getSolutionPublic
+      parameters:
+      - $ref: '#/components/parameters/pathSolutionId'
+      - $ref: '#/components/parameters/xQblErrorsAsSuccess'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    description: The unique identifier (UUID) of the solution
+                  alias:
+                    type: string
+                    description: The alias of the solution
+                  name:
+                    type: string
+                    description: The name of the solution
+                  description:
+                    type: string
+                    description: The description of the solution
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: The date and time when the solution was created
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: The date and time when the solution was last updated
+                  resources:
+                    type: object
+                    properties:
+                      apps:
+                        type: array
+                        description: List of applications contained within the solution
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: The real ID of the application
+                            logicalId:
+                              type: string
+                              description: The logical ID of the application
+                      pipelines:
+                        type: array
+                        description: List of pipelines contained within the solution
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: The real ID of the pipeline
+                            logicalId:
+                              type: string
+                              description: The logical ID of the pipeline
+                example:
+                  uuid: f53acd36-1e75-47ed-910c-0ca4fd165a84
+                  alias: my-solution-alias
+                  name: My Example Solution
+                  description: A solution containing example applications and pipelines
+                  createdAt: '2024-01-15T10:30:00Z'
+                  updatedAt: '2024-03-22T14:45:00Z'
+                  resources:
+                    apps:
+                    - id: bskapa2x3
+                      logicalId: $App_Example_app
+                    - id: bskbqm7y4
+                      logicalId: $App_Project_Manager
+                    pipelines:
+                    - id: '123456789'
+                      logicalId: $Pipeline_Data_Sync
+                    - id: '987654321'
+                      logicalId: $Pipeline_Notification_Flow
+        '400':
+          description: 'Bad request. For example: Missing required headers, Missing required parameters, Invalid solution ID format and others. Message should provide more information, reach out to support if there''s lack of clarity.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  description:
+                    type: string
+                example:
+                  message: Bad request.
+                  description: ''
+        '401':
+          description: 'Insufficient access. This could be for many reasons such as: User doesn''t have SolutionHub access, User is not the owner or a contributor for the solution, User cannot access the solution and others. Message should provide more information.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  description:
+                    type: string
+                example:
+                  message: Forbidden.
+                  description: ''
+        '403':
+          description: 'Insufficient access. This could be for many reasons such as: User doesn''t have SolutionHub access, User is not the owner or a contributor for the solution, User cannot access the solution and others. Message should provide more information.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  description:
+                    type: string
+                example:
+                  message: Forbidden.
+                  description: ''
+        '404':
+          description: Solution does not exist. The supplied solution ID was not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  description:
+                    type: string
+                example:
+                  message: Not found.
+                  description: ''
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  description:
+                    type: string
+                example:
+                  message: Internal server error.
+                  description: ''
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    authorization:
+      name: Authorization
+      in: header
+      description: The Quickbase authentication scheme you are using to authenticate the request, as described on the [authorization page](../auth).
+      required: true
+      schema:
+        type: string
+      example: QB-USER-TOKEN xxxxxx_xxx_xxxxxxxxxxxxxxxxxxxxxxx
+    queryTableId:
+      name: tableId
+      in: query
+      description: The unique identifier (dbid) of the table.
+      required: true
+      allowReserved: true
+      schema:
+        $ref: '#/components/schemas/tableId'
+    qblVersion:
+      name: QBL-Version
+      in: header
+      description: The QBL version to be used for the export. If not specified the default would be used.
+      required: false
+      schema:
+        type: string
+      example: '0.11'
+    queryAlias:
+      name: alias
+      in: query
+      description: An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
+      required: false
+      schema:
+        type: string
+      example: my-solution-alias
+    qbRealmHostname:
+      name: QB-Realm-Hostname
+      in: header
+      description: Your Quickbase domain, for example demo.quickbase.com
+      required: true
+      schema:
+        type: string
+      example: demo.quickbase.com
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+    xQblErrorsAsSuccess:
+      name: X-QBL-Errors-As-Success
+      in: header
+      description: If this header is set to true, the API will return a 207 status code even if errors occur. The response will contain X-QBL-ORIGINAL-STATUS header with the original error code, and the response body will include the error details.
+      required: false
+      schema:
+        type: boolean
+      example: true
+    pathSolutionId:
+      name: solutionId
+      in: path
+      description: The unique identifier (UUID) or the alias of the solution.
+      required: true
+      schema:
+        type: string
+      example: f53acd36-1e75-47ed-910c-0ca4fd165a84
+  responses:
+    solutionUnexpectedError:
+      description: Non-common error, reach out to support if there's lack of clarity.
+      content:
+        application/json:
+          example:
+            message: Internal server error.
+            description: ''
+    solutionBadRequest:
+      description: 'Bad request. For example: Missing required headers, Missing required parameters, Malformed QBL and others. Message should provide more information, reach out to support if there''s lack of clarity.'
+      content:
+        application/json:
+          example:
+            message: Bad request.
+            description: ''
+    solutionOrFieldNotFound:
+      description: 'A resource is missing. For example: The supplied solution or field does not exist.'
+      content:
+        application/json:
+          example:
+            message: Not found.
+            description: ''
+    solutionFieldOrRecordNotFound:
+      description: 'A resource is missing. For example: The supplied solution, field or record does not exist.'
+      content:
+        application/json:
+          example:
+            message: Not found.
+            description: ''
+    solutionNotFound:
+      description: Solution does not exist. The supplied solution ID was not found.
+      content:
+        application/json:
+          example:
+            message: Not found.
+            description: ''
+    solutionInsufficientAccess:
+      description: 'Insufficient access. This could be for many reasons such as: User doesn''t have SolutionHub access, User is not the owner or a contributor for the solution, User cannot create apps and others.  Message should provide more information.'
+      content:
+        application/json:
+          example:
+            message: Forbidden.
+            description: ''
+    solutionUnsupportedMediaType:
+      description: The Content-Type header must be set to application/x-yaml.
+  schemas:
+    tableId:
+      type: string
+      pattern: ^(\w+\/\(\w+\)|\w+)$
+      description: The unique identifier (dbid) of the table.
+      example: bck7gp3q2
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

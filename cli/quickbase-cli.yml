@@ -1,0 +1,16 @@
+generated: '2026-10-18'
+method: searched
+source: https://help.quickbase.com/docs/quickbase-pipelines-agent-client-installation.md
+docs: https://help.quickbase.com/docs/quickbase-pipelines-agent-client-installation.md
+install:
+  windows: Download MSI installer from Pipelines > My Preferences > Agent tab
+  requirements:
+    - DNS access to agents.pipelines.quickbase.com and www.pipelines.quickbase.com
+    - Outbound TCP connections to port 5555
+    - HTTPS access on port 443
+commands:
+  - name: QuickbasePipelinesAgentService.exe
+    description: Windows background service for production use
+  - name: QuickbasePipelinesAgentInteractive.exe
+    description: Interactive application for debugging purposes
+note: Quickbase does not provide a general command-line interface (CLI). The Pipelines Agent Client is specifically for connecting on-premises resources to Quickbase Pipelines workflow automation platform.

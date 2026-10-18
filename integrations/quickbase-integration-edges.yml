@@ -1,0 +1,76 @@
+generated: '2026-10-18'
+method: searched
+source:
+- https://www.quickbase.com/exchange
+checked:
+- https://composio.dev/toolkits/quickbase
+- https://help.quickbase.com/docs/understand-integrations.md
+- https://monid.ai/tools/quickbase
+- https://n8n.io/integrations/quickbase/
+- https://www.quickbase.com/exchange
+- https://www.quickbase.com/product/integrations
+- https://zapier.com/apps/quickbase/integrations
+summary: null
+marketplace_apps:
+- marketplace: own
+  app: QBI for Beginners - Project Hub App
+  url: https://www.quickbase.com/exchange
+  app_count: 103
+  categories:
+  - App Management
+  - Asset Management
+  - Business Intelligence
+  - Compliance
+  - Construction
+  - Continuous Improvement
+  - CRM & Sales
+  - Data Transformation
+  - Education & Training
+  - Facility Management
+  - Field Project Management
+  - Finance
+  - Goal & KPI Tracking
+  - Governance
+  - Health & Safety
+  - Information Technology
+  - Inventory Management
+  - Magic Button
+  - Maintenance
+  - Manufacturing
+  - Operations
+  - People Management
+  - Pipelines
+  - Project Management
+  - Quickbase at Scale
+  - SLED
+  - Starter App
+  - Supply Chain
+  - University
+  - Utilities
+  - Vendor & Logistics Coordination
+edges:
+- partner_name: Quickbase App Library
+  partner: null
+  type: marketplace
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://www.quickbase.com/exchange
+  marketplace: own
+  description: Quickbase App Library with 103 apps built on the Quickbase platform
+- partner_name: Various third-party tools
+  partner: null
+  type: claimed
+  relationship: connector-listing
+  direction: provider-built
+  evidence: https://www.quickbase.com/product/integrations
+  description: Quickbase offers 40+ pre-built integrations with third-party tools
+  operations:
+  - Communication tools integration
+  - File creation and storage integration
+  - Project management integration
+  - Workflow enhancement integration
+  - Financial software integration
+  - Enterprise system integration
+templates: []
+note: Quickbase has its own app marketplace (Quickbase Exchange) with 103 apps and claims 40+ pre-built integrations
+  with third-party tools.

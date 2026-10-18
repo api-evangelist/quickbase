@@ -1,0 +1,24 @@
+generated: '2026-10-18'
+method: searched
+generator: extract-docs-artifacts.py (deepseek)
+source: https://help.quickbase.com/docs/is-your-channel-polling-or-webhook-based.md
+sources:
+- https://help.quickbase.com/docs/is-your-channel-polling-or-webhook-based.md
+- https://help.quickbase.com/docs/disabling-application-webhooks.md
+- https://help.quickbase.com/docs/webhooks-channel.md
+- https://help.quickbase.com/docs/webhooks-1.md
+description: Quickbase provides webhook functionality through its Pipelines feature and native application webhooks, allowing real-time event
+  notifications and HTTP callbacks.
+events:
+- event: Record Created | Updated | Deleted
+  description: Triggers when a record is created, updated, or deleted in Quickbase.
+- event: Incoming Request
+  description: Triggers when you make an HTTP request to an auto-generated webhook endpoint.
+- event: Request for JSONP
+  description: JSONP (JSON with Padding) trigger for accessing returned data through function calls.
+delivery:
+  auth: JWT Token
+note: The documentation mentions JWT Token authentication for Incoming Request webhooks, with public key and signing algorithm configuration.
+  For native Quickbase webhooks, they can be disabled via realm policies for increased security.
+docs: https://help.quickbase.com/docs/is-your-channel-polling-or-webhook-based.md, https://help.quickbase.com/docs/disabling-application-webhooks.md,
+  https://help.quickbase.com/docs/webhooks-channel.md, https://help.quickbase.com/docs/webhooks-1.md

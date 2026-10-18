@@ -1,0 +1,296 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Trustees API
+  version: 1.0.0
+  description: 'Operations tagged Trustees across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Trustees
+paths:
+  /app/{appId}/trustees:
+    get:
+      tags:
+      - Trustees
+      summary: Get trustees for an app
+      description: Returns the list of trustees for a specific application. Trustees include users, groups and email domain groups.
+      operationId: getTrustees
+      parameters:
+      - $ref: '#/components/parameters/pathAppId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trusteeList'
+    post:
+      tags:
+      - Trustees
+      summary: Add trustees to an app
+      description: Add trustees to the specified application. Trustees include users, groups and email domain groups.
+      operationId: addTrustees
+      parameters:
+      - $ref: '#/components/parameters/pathAppId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/trusteeList'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trusteeChangeResponse'
+        '207':
+          description: Partial success. Some trustees were added successfully, while others failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trusteeChangeResponse'
+    delete:
+      tags:
+      - Trustees
+      summary: Remove trustees from an app
+      description: Remove trustees from the specified application. Trustees include users, groups and email domain groups.
+      operationId: removeTrustees
+      parameters:
+      - $ref: '#/components/parameters/pathAppId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/trusteeList'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trusteeChangeResponse'
+        '207':
+          description: Partial success. Some trustees were added successfully, while others failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trusteeChangeResponse'
+    patch:
+      tags:
+      - Trustees
+      summary: Update trustees of an app
+      description: Update trustees for the specified application. Trustees include users, groups and email domain groups.
+      operationId: updateTrustees
+      parameters:
+      - $ref: '#/components/parameters/pathAppId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/trusteeUpdateList'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trusteeUpdateResponse'
+        '207':
+          description: Partial success. Some trustees were added successfully, while others failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trusteeUpdateResponse'
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    authorization:
+      name: Authorization
+      in: header
+      description: The Quickbase authentication scheme you are using to authenticate the request, as described on the [authorization page](../auth).
+      required: true
+      schema:
+        type: string
+      example: QB-USER-TOKEN xxxxxx_xxx_xxxxxxxxxxxxxxxxxxxxxxx
+    qbRealmHostname:
+      name: QB-Realm-Hostname
+      in: header
+      description: Your Quickbase domain, for example demo.quickbase.com
+      required: true
+      schema:
+        type: string
+      example: demo.quickbase.com
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+    pathAppId:
+      name: appId
+      in: path
+      description: The unique identifier of an app
+      required: true
+      allowReserved: true
+      schema:
+        $ref: '#/components/schemas/appId'
+  schemas:
+    appId:
+      type: string
+      pattern: ^\w+$
+      description: The unique identifier (dbid) of the app.
+      example: bck7gp3q2
+    trusteeList:
+      type: array
+      items:
+        $ref: '#/components/schemas/trusteeInput'
+      description: A list of trustees. Each trustee is represented by an object containing the trustee's ID, type, and role ID.
+      minItems: 1
+      maxItems: 1000
+      example:
+      - id: 123456.ab1s
+        type: user
+        roleId: 10
+      - id: 1002.czm8
+        type: group
+        roleId: 11
+    trusteeUpdateResponse:
+      type: object
+      required:
+      - failure
+      - success
+      properties:
+        failure:
+          description: A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
+          type: array
+          items:
+            type: object
+            properties:
+              error:
+                type: string
+                description: The error message associated with the trustee that could not be updated.
+              trustee:
+                $ref: '#/components/schemas/trusteeUpdateInput'
+        success:
+          description: A list of trustees that have been successfully updated.
+          type: array
+          items:
+            $ref: '#/components/schemas/trusteeUpdateInput'
+      example:
+        failure:
+        - error: Invalid user ID
+          trustee:
+            id: 78910.ba1s
+            type: user
+            roleId: 12
+            oldRoleId: 15
+        success:
+        - id: 123456.ab1s
+          type: user
+          roleId: 10
+          oldRoleId: 15
+    trusteeUpdateList:
+      type: array
+      items:
+        $ref: '#/components/schemas/trusteeUpdateInput'
+      description: A list of trustees to be updated in an app. Each trustee is represented by an object containing the trustee's ID, type, and role ID.
+      minItems: 1
+      maxItems: 1000
+      example:
+      - id: 123456.ab1s
+        type: user
+        roleId: 10
+        oldRoleId: 15
+      - id: 1002.czm8
+        type: group
+        roleId: 11
+        oldRoleId: 16
+    trusteeInput:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+          example: 123456.ab1s
+        type:
+          type: string
+          description: The type of trustee being added. This can be a user, group, or email domain group.
+          enum:
+          - user
+          - group
+          - dom-group
+          example: user
+        roleId:
+          type: integer
+          description: The ID of the role to be assigned or currently assigned to the trustee.
+          example: 10
+      required:
+      - id
+      - type
+      - roleId
+      description: Object used for operations to read, create, or update trustees in an app.
+      example:
+        id: 123456.ab1s
+        type: user
+        roleId: 10
+    trusteeUpdateInput:
+      allOf:
+      - $ref: '#/components/schemas/trusteeInput'
+      - type: object
+        properties:
+          oldRoleId:
+            type: integer
+            description: The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
+        required:
+        - oldRoleId
+    trusteeChangeResponse:
+      type: object
+      required:
+      - failure
+      - success
+      properties:
+        failure:
+          description: A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
+          type: array
+          items:
+            type: object
+            properties:
+              error:
+                type: string
+                description: The error message associated with the trustee that could not be updated.
+              trustee:
+                $ref: '#/components/schemas/trusteeInput'
+        success:
+          description: A list of trustees that have been successfully updated.
+          type: array
+          items:
+            $ref: '#/components/schemas/trusteeInput'
+      example:
+        failure:
+        - error: Invalid user ID
+          trustee:
+            id: 78910.ba1s
+            type: user
+            roleId: 12
+        success:
+        - id: 123456.ab1s
+          type: user
+          roleId: 10
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

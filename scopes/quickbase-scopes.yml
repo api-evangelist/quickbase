@@ -1,0 +1,4 @@
+generated: '2026-10-18'
+method: none
+scopes: []
+note: Quickbase does not use OAuth2 scopes. Authentication is via API keys (user tokens) without scope-based permissions.

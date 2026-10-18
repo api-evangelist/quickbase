@@ -1,0 +1,52 @@
+name: Quickbase agent skills
+generated: '2026-10-18'
+method: generated
+source: Generated from openapi/quickbase-openapi.yml (Quickbase RESTful JSON API 3.0.1,
+  https://developer.quickbase.com/qb-openapi-v3.json). No provider-published skills
+  or AGENTS.md were found. Every operationId verified verbatim in the spec.
+skills:
+- file: quickbase-query-records.md
+  name: quickbase-query-records
+  api: openapi/quickbase-openapi.yml
+  operations:
+  - getAppTables
+  - getFields
+  - runQuery
+- file: quickbase-upsert-records.md
+  name: quickbase-upsert-records
+  api: openapi/quickbase-openapi.yml
+  operations:
+  - getFields
+  - upsert
+  - runQuery
+- file: quickbase-run-a-report.md
+  name: quickbase-run-a-report
+  api: openapi/quickbase-openapi.yml
+  operations:
+  - getTableReports
+  - getReport
+  - runReport
+- file: quickbase-build-an-app.md
+  name: quickbase-build-an-app
+  api: openapi/quickbase-openapi.yml
+  operations:
+  - createApp
+  - createTable
+  - createField
+  - upsert
+- file: quickbase-sync-changed-records.md
+  name: quickbase-sync-changed-records
+  api: openapi/quickbase-openapi.yml
+  operations:
+  - recordsModifiedSince
+  - runQuery
+  - deleteRecords
+- file: quickbase-manage-group-membership.md
+  name: quickbase-manage-group-membership
+  api: openapi/quickbase-openapi.yml
+  operations:
+  - getUsers
+  - addMembersToGroup
+  - removeMembersFromGroup
+  - addManagersToGroup
+  - addSubgroupsToGroup

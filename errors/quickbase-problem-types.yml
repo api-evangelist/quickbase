@@ -1,0 +1,23 @@
+generated: '2026-10-18'
+method: searched
+source: https://developer.quickbase.com/errors
+docs: https://developer.quickbase.com/errors
+format: json
+envelope:
+  message: Error message
+  description: Detailed error description
+problems:
+- status: 400
+  title: Bad request
+  description: Required header 'QB-Realm-Hostname' not specified
+  type: client_error
+- status: 403
+  title: Access denied
+  description: User token is invalid
+  type: authentication_error
+- status: 429
+  title: Too Many Requests
+  description: Rate limit exceeded
+  type: rate_limit_error
+  remediation: Wait for retry-after period specified in response header
+note: Quickbase API uses standard HTTP response codes. 2xx indicates success, 4xx indicates client error, 5xx indicates server error.

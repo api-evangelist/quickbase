@@ -1,0 +1,24 @@
+generated: '2026-10-18'
+method: probed
+generator: harvest-packages.py
+source: registry metadata endpoints (registry.npmjs.org, pypi.org, rubygems.org, api.nuget.org, packagist.org, crates.io)
+ownership_rule: 'official: true only when the registry metadata (homepage, repository, author, URLs) names the provider''s domain (linkedin.com,
+  quickbase.com, security/quickbase-domain-security.yml, security/quickbase-trust-center.yml, security/quickbase-vulnerability-disclosure.yml)
+  or its accepted GitHub org.'
+packages:
+- name: quickbase
+  registry: npm
+  url: https://www.npmjs.com/package/quickbase
+  language: JavaScript
+  official: true
+  version: 6.0.0
+  published: '2024-05-08'
+  evidence: metadata names quickbase.com
+- name: quickbase
+  registry: rubygems
+  url: https://rubygems.org/gems/quickbase
+  language: Ruby
+  official: false
+  version: 0.1.0
+  published: '2017-05-25'
+  evidence: 'name match only: the metadata names neither the provider''s domain nor its GitHub org'

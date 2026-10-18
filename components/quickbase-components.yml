@@ -1,0 +1,22 @@
+generated: '2026-10-18'
+method: searched
+source: https://help.quickbase.com/docs/embed-a-report-in-a-form.md
+docs: https://help.quickbase.com/docs/embed-a-report-in-a-form.md
+families:
+- name: Report Components
+  description: Embed functioning reports in forms to display related records from other tables
+  features:
+    - View reports
+    - View individual records
+    - Edit individual records
+    - Sort report records
+    - Search and filter records
+  docs: https://help.quickbase.com/docs/embed-a-report-in-a-form.md
+- name: Form Elements
+  description: Various form elements for building Quickbase applications
+  features:
+    - Form builders with preview mode
+    - Custom form layouts
+    - Field components
+  docs: https://help.quickbase.com/docs
+note: Quickbase provides built-in UI components within its platform for building applications, including report components that can be embedded in forms. These are platform-specific components rather than standalone web components.

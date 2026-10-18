@@ -1,0 +1,13 @@
+generated: '2026-10-18'
+method: searched
+probe: true
+source: https://www.quickbase.com/compliance
+url: https://www.quickbase.com/compliance
+certifications:
+- HIPAA
+evidence:
+- source: https://www.quickbase.com/compliance
+  keywords:
+  - hipaa
+  - trust center
+  - compliance certification

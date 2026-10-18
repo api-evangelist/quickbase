@@ -1,0 +1,756 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Apps API
+  version: 1.0.0
+  description: 'Operations tagged Apps across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Apps
+paths:
+  /apps:
+    post:
+      tags:
+      - Apps
+      summary: Create an app
+      description: Creates an application in an account. You must have application creation rights in the respective account. Main properties and application variables can be set with this API.
+      operationId: createApp
+      parameters:
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - name
+              type: object
+              properties:
+                assignToken:
+                  type: boolean
+                  description: Set to true if you would like to assign the app to the user token you used to create the application. The default is false.
+                  example: false
+                variables:
+                  $ref: '#/components/schemas/appVariables'
+                name:
+                  type: string
+                  description: The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+                securityProperties:
+                  $ref: '#/components/schemas/appSecurityProperties'
+                description:
+                  type: string
+                  description: The description for the app. If this property is left out, the app description will be blank.
+              description: The example below shows all the properties that can be set with this request. Additional properties that you can see, with the corresponding GET request, cannot be set through this API. See individual property descriptions below for details on how to set or change each.
+              example:
+                name: My App
+                description: My first app
+                assignToken: true
+                securityProperties:
+                  allowClone: false
+                  allowExport: false
+                  enableAppTokens: false
+                  hideFromPublic: false
+                  mustBeRealmApproved: true
+                  useIPFilter: true
+                variables:
+                - name: Variable1
+                  value: Value1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/appResponse'
+              examples:
+                Simple Application:
+                  value:
+                    created: '2020-03-27T18:34:12Z'
+                    dateFormat: MM-DD-YYYY
+                    description: My testing app
+                    hasEveryoneOnTheInternet: true
+                    id: bpqe82s1
+                    memoryInfo:
+                      estMemory: 1.0
+                      estMemoryInclDependentApps: 2.0
+                    name: Testing App
+                    securityProperties:
+                      allowClone: false
+                      allowExport: false
+                      enableAppTokens: false
+                      hideFromPublic: false
+                      mustBeRealmApproved: true
+                      useIPFilter: true
+                    timeZone: (UTC-08:00) Pacific Time (US & Canada)
+                    updated: '2020-04-03T19:12:20Z'
+                    dataClassification: Confidential
+                Application with defined variables:
+                  description: This examples shows the response of an application that contains one or more variables.
+                  value:
+                    created: '2020-03-27T18:34:12Z'
+                    dateFormat: MM-DD-YYYY
+                    description: My testing app
+                    hasEveryoneOnTheInternet: true
+                    id: bpqe82s1
+                    memoryInfo:
+                      estMemory: 1.0
+                      estMemoryInclDependentApps: 2.0
+                    name: Testing App
+                    securityProperties:
+                      allowClone: false
+                      allowExport: false
+                      enableAppTokens: false
+                      hideFromPublic: false
+                      mustBeRealmApproved: true
+                      useIPFilter: true
+                    timeZone: (UTC-08:00) Pacific Time (US & Canada)
+                    variables:
+                    - name: Project End Date
+                      value: 7-16-2025
+                    - name: Project Manager Email
+                      value: p.diaz@company.com
+                    updated: '2020-04-03T19:12:20Z'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /apps/{appId}:
+    get:
+      tags:
+      - Apps
+      summary: Get an app
+      description: Returns the main properties of an application, including application variables.
+      operationId: getApp
+      parameters:
+      - $ref: '#/components/parameters/pathAppId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/appResponse'
+              examples:
+                Simple Application:
+                  value:
+                    ancestorId: bqhskthaq
+                    created: '2020-03-27T18:34:12Z'
+                    dateFormat: MM-DD-YYYY
+                    description: My testing app
+                    hasEveryoneOnTheInternet: true
+                    memoryInfo:
+                      estMemory: 1.0
+                      estMemoryInclDependentApps: 2.0
+                    id: bpqe82s1
+                    name: Testing App
+                    securityProperties:
+                      allowClone: false
+                      allowExport: false
+                      enableAppTokens: false
+                      hideFromPublic: false
+                      mustBeRealmApproved: true
+                      useIPFilter: true
+                    timeZone: (UTC-08:00) Pacific Time (US & Canada)
+                    updated: '2020-04-03T19:12:20Z'
+                    dataClassification: Confidential
+                Application with defined variables:
+                  description: This examples shows the response of an application that contains one or more variables.
+                  value:
+                    ancestorId: bqhskthaq
+                    created: '2020-03-27T18:34:12Z'
+                    dateFormat: MM-DD-YYYY
+                    description: My testing app
+                    hasEveryoneOnTheInternet: true
+                    id: bpqe82s1
+                    memoryInfo:
+                      estMemory: 1.0
+                      estMemoryInclDependentApps: 2.0
+                    name: Testing App
+                    securityProperties:
+                      allowClone: false
+                      allowExport: false
+                      enableAppTokens: false
+                      hideFromPublic: false
+                      mustBeRealmApproved: true
+                      useIPFilter: true
+                    timeZone: (UTC-08:00) Pacific Time (US & Canada)
+                    variables:
+                    - name: Project End Date
+                      value: 7-16-2025
+                    - name: Project Manager Email
+                      value: p.diaz@company.com
+                    updated: '2020-04-03T19:12:20Z'
+    post:
+      tags:
+      - Apps
+      summary: Update an app
+      description: Updates the main properties and/or application variables for a specific application. Any properties of the app that you do not specify in the request body will remain unchanged.
+      operationId: updateApp
+      parameters:
+      - $ref: '#/components/parameters/pathAppId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                variables:
+                  allOf:
+                  - $ref: '#/components/schemas/appVariables'
+                  - description: The app variables. A maximum of 10 variables can be updated at a time. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+                name:
+                  type: string
+                  description: The name for the app.
+                securityProperties:
+                  $ref: '#/components/schemas/appSecurityProperties'
+                description:
+                  type: string
+                  description: The description for the app.
+              description: The example below shows all the properties that can be changed with this request. Additional properties that you can see with the corresponding GET request cannot be set through this API. See individual property descriptions below for details on how to set or change each.
+              example:
+                name: My App
+                description: My first app
+                variables:
+                - name: Variable1
+                  value: Value1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/appResponse'
+              examples:
+                Simple Application:
+                  value:
+                    ancestorId: bqhskthaq
+                    created: '2020-03-27T18:34:12Z'
+                    dateFormat: MM-DD-YYYY
+                    description: My testing app
+                    hasEveryoneOnTheInternet: true
+                    memoryInfo:
+                      estMemory: 1.0
+                      estMemoryInclDependentApps: 2.0
+                    id: bpqe82s1
+                    name: Testing App
+                    securityProperties:
+                      allowClone: false
+                      allowExport: false
+                      enableAppTokens: false
+                      hideFromPublic: false
+                      mustBeRealmApproved: true
+                      useIPFilter: true
+                    timeZone: (UTC-08:00) Pacific Time (US & Canada)
+                    updated: '2020-04-03T19:12:20Z'
+                    dataClassification: Confidential
+                Application with defined variables:
+                  description: This examples shows the response of an application that contains one or more variables.
+                  value:
+                    ancestorId: bqhskthaq
+                    created: '2020-03-27T18:34:12Z'
+                    dateFormat: MM-DD-YYYY
+                    description: My testing app
+                    hasEveryoneOnTheInternet: true
+                    id: bpqe82s1
+                    memoryInfo:
+                      estMemory: 1.0
+                      estMemoryInclDependentApps: 2.0
+                    name: Testing App
+                    securityProperties:
+                      allowClone: false
+                      allowExport: false
+                      enableAppTokens: false
+                      hideFromPublic: false
+                      mustBeRealmApproved: true
+                      useIPFilter: true
+                    timeZone: (UTC-08:00) Pacific Time (US & Canada)
+                    variables:
+                    - name: Project End Date
+                      value: 7-16-2025
+                    - name: Project Manager Email
+                      value: p.diaz@company.com
+                    updated: '2020-04-03T19:12:20Z'
+    delete:
+      tags:
+      - Apps
+      summary: Delete an app
+      description: Deletes an entire application, including all of the tables and data.
+      operationId: deleteApp
+      parameters:
+      - $ref: '#/components/parameters/pathAppId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - name
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: To confirm application deletion we ask for application name.
+              example:
+                name: Name of an application to delete
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deletedAppId:
+                    description: An ID of deleted application.
+                    type: string
+                example:
+                  deletedAppId: bqhskthaq
+    servers:
+    - url: https://api.quickbase.com/v1
+  /apps/{appId}/events:
+    get:
+      tags:
+      - Apps
+      summary: Get app events
+      description: 'Get a list of events that can be triggered based on data or user actions in this application, includes: Email notification, Reminders, Subscriptions, QB Actions, Webhooks, record change triggered Automations (does not include scheduled).'
+      operationId: getAppEvents
+      parameters:
+      - $ref: '#/components/parameters/pathAppId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - type: qb-action
+                  owner:
+                    email: jsmith@quickbase.com
+                    id: 123456.ab1s
+                    name: Juliet Smith
+                    userName: jsmith
+                  isActive: true
+                  tableId: bqwriv8bw
+                  name: Quick Base Action
+                - type: webhook
+                  owner:
+                    email: tanderson@quickbase.com
+                    id: 654321.ab1s
+                    name: Thomas A. Anderson
+                    userName: tanderson
+                  isActive: false
+                  tableId: bqwriv8bw
+                  name: Webhook
+                - type: email-notification
+                  owner:
+                    email: jsmith@quickbase.com
+                    id: 123456.ab1s
+                    name: Juliet Smith
+                    userName: jsmith
+                  isActive: false
+                  tableId: bqwriv8bw
+                  name: Notification
+                - type: subscription
+                  owner:
+                    email: tanderson@quickbase.com
+                    id: 654321.ab1s
+                    name: Thomas A. Anderson
+                    userName: tanderson
+                  isActive: true
+                  tableId: bqwriv8bw
+                  name: Subscription
+                - type: reminder
+                  owner:
+                    email: jsmith@quickbase.com
+                    id: 123456.ab1s
+                    name: Juliet Smith
+                    userName: jsmith
+                  isActive: true
+                  tableId: bqwriv8bw
+                  name: Reminder
+                - type: automation
+                  owner:
+                    email: tanderson@quickbase.com
+                    id: 654321.ab1s
+                    name: Thomas A. Anderson
+                    userName: tanderson
+                  isActive: true
+                  tableId: bqwriv8bw
+                  url: https://realm.quickbase.com/ui/automation/qb/db/bqwria893/automations/70eecab9-634f-42d9-9037-9340a1a9e8ce
+                items:
+                  type: object
+                  properties:
+                    isActive:
+                      type: boolean
+                      description: Indication of whether current event is active.
+                    type:
+                      type: string
+                      description: Type of an event.
+                      enum:
+                      - webhook
+                      - qb-action
+                      - email-notification
+                      - subscription
+                      - reminder
+                      - automation
+                    name:
+                      type: string
+                      description: The name of the event. This property is not returned for automations.
+                    url:
+                      type: string
+                      description: The url to automation that can be accessed from the browser. Only returned for automations.
+                    owner:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: User full name.
+                        id:
+                          type: string
+                          description: User Id.
+                        email:
+                          type: string
+                          description: User email.
+                        userName:
+                          type: string
+                          description: User Name as updated in user properties. Optional, appears if not the same as user email.
+                      description: The user that owns the event.
+                    tableId:
+                      type: string
+                      description: The unique identifier of the table to which event belongs to.
+    servers:
+    - url: https://api.quickbase.com/v1
+  /apps/{appId}/copy:
+    post:
+      tags:
+      - Apps
+      summary: Copy an app
+      description: Copies the specified application. The new application will have the same schema as the original. See below for additional copy options.
+      operationId: copyApp
+      parameters:
+      - $ref: '#/components/parameters/pathAppId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - name
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the newly copied app
+                  minLength: 1
+                description:
+                  type: string
+                  description: The description of the newly copied app
+                properties:
+                  type: object
+                  properties:
+                    assignUserToken:
+                      type: boolean
+                      description: Whether to add the user token used to make this request to the new app
+                    excludeFiles:
+                      type: boolean
+                      description: If keepData is true, whether to copy the file attachments as well. If keepData is false, this property is ignored
+                    keepData:
+                      type: boolean
+                      description: Whether to copy the app's data along with the schema
+                    usersAndRoles:
+                      type: boolean
+                      description: If true, users will be copied along with their assigned roles. If false, users and roles will be copied but roles will not be assigned
+                  description: The configuration properties for performing the app copy
+              example:
+                name: my copied app
+                description: copied from my original app
+                properties:
+                  keepData: false
+                  excludeFiles: true
+                  usersAndRoles: false
+                  assignUserToken: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    description: The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+                    type: string
+                  description:
+                    description: The description for the app
+                    type: string
+                  created:
+                    description: The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+                    type: string
+                  updated:
+                    description: The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+                    type: string
+                  dateFormat:
+                    description: A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/docs/how-to-localize-dates) to set the app's date format.
+                    type: string
+                  timeZone:
+                    description: A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/docs/set-the-time-zone-for-both-the-application-and-the-account) to set the application's time zone.
+                    type: string
+                  id:
+                    description: The unique identifier for this application.
+                    type: string
+                  hasEveryoneOnTheInternet:
+                    description: Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+                    type: boolean
+                  variables:
+                    allOf:
+                    - $ref: '#/components/schemas/appVariables'
+                    - description: The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+                  ancestorId:
+                    description: The id of the app from which this app was copied
+                    type: string
+                  dataClassification:
+                    description: The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
+                    type: string
+                example:
+                  ancestorId: bqhskthaq
+                  created: '2020-03-27T18:34:12.000Z'
+                  dateFormat: MM-DD-YYYY
+                  description: My testing app
+                  hasEveryoneOnTheInternet: true
+                  id: bpqe82s1
+                  name: Testing App
+                  timeZone: (UTC-08:00) Pacific Time (US & Canada)
+                  updated: '2020-04-03T19:12:20.000Z'
+                  dataClassification: None
+    servers:
+    - url: https://api.quickbase.com/v1
+  /apps/{appId}/roles:
+    get:
+      tags:
+      - Apps
+      summary: Get app roles
+      description: Retrieves all of the roles for an application. Requires admin access to an app.
+      operationId: getRoles
+      parameters:
+      - $ref: '#/components/parameters/pathAppId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - access:
+                    id: 3
+                    type: Basic Access
+                  id: 10
+                  name: Viewer
+                - access:
+                    id: 2
+                    type: Basic Access with Share
+                  id: 11
+                  name: Participant
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The role id.
+                    name:
+                      type: string
+                      description: The role name.
+                    access:
+                      type: object
+                      description: The role access properties.
+                      properties:
+                        id:
+                          type: integer
+                          description: The ID of the access type the role is given. (0 = None, 1 = Administrator, 2 = Basic Access with Share, 3 = Basic Access, 4 = Partial Administrator).
+                        type:
+                          type: string
+                          description: The type of access the role is given.
+                          enum:
+                          - None
+                          - Administrator
+                          - Basic Access with Share
+                          - Basic Access
+                          - Partial Administrator
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    authorization:
+      name: Authorization
+      in: header
+      description: The Quickbase authentication scheme you are using to authenticate the request, as described on the [authorization page](../auth).
+      required: true
+      schema:
+        type: string
+      example: QB-USER-TOKEN xxxxxx_xxx_xxxxxxxxxxxxxxxxxxxxxxx
+    qbRealmHostname:
+      name: QB-Realm-Hostname
+      in: header
+      description: Your Quickbase domain, for example demo.quickbase.com
+      required: true
+      schema:
+        type: string
+      example: demo.quickbase.com
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+    pathAppId:
+      name: appId
+      in: path
+      description: The unique identifier of an app
+      required: true
+      allowReserved: true
+      schema:
+        $ref: '#/components/schemas/appId'
+  schemas:
+    appId:
+      type: string
+      pattern: ^\w+$
+      description: The unique identifier (dbid) of the app.
+      example: bck7gp3q2
+    appSecurityProperties:
+      type: object
+      properties:
+        hideFromPublic:
+          type: boolean
+          description: Hide from public application searches
+        mustBeRealmApproved:
+          type: boolean
+          description: Only "approved" users may access this application
+        allowClone:
+          type: boolean
+          description: Allow users who are not administrators to copy
+        useIPFilter:
+          type: boolean
+          description: Only users logging in from "approved" IP addresses may access this application
+        allowExport:
+          type: boolean
+          description: Allow users who are not administrators to export data
+        enableAppTokens:
+          type: boolean
+          description: Require Application Tokens
+      description: Security properties of the application
+    appVariables:
+      type: array
+      description: The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
+      items:
+        $ref: '#/components/schemas/appVariable'
+    appResponse:
+      type: object
+      required:
+      - name
+      properties:
+        ancestorId:
+          description: The id of the app from which this app was copied
+          type: string
+        name:
+          description: The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+          type: string
+        description:
+          description: The description for the app. If this property is left out, the app description will be blank.
+          type: string
+        created:
+          description: The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+          type: string
+        updated:
+          description: The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+          type: string
+        dateFormat:
+          description: A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
+          type: string
+        timeZone:
+          description: A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
+          type: string
+        id:
+          description: The unique identifier for this application.
+          type: string
+        hasEveryoneOnTheInternet:
+          description: Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/docs/sharing-apps-publicly)
+          type: boolean
+        memoryInfo:
+          $ref: '#/components/schemas/memoryInfo'
+        variables:
+          description: The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+          type: array
+          items:
+            $ref: '#/components/schemas/appVariable'
+        dataClassification:
+          description: The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
+          type: string
+        securityProperties:
+          $ref: '#/components/schemas/appSecurityProperties'
+      example:
+        ancestorId: bqhskthaq
+        created: '2020-03-27T18:34:12.000Z'
+        dateFormat: MM-DD-YYYY
+        description: My testing app
+        hasEveryoneOnTheInternet: true
+        id: bpqe82s1
+        memoryInfo:
+          estMemory: 1.0
+          estMemoryInclDependentApps: 2.0
+        name: Testing App
+        securityProperties:
+          allowClone: false
+          allowExport: false
+          enableAppTokens: false
+          hideFromPublic: false
+          mustBeRealmApproved: true
+          useIPFilter: true
+        timeZone: (UTC-08:00) Pacific Time (US & Canada)
+        variables:
+        - name: Project End Date
+          value: 7-16-2025
+        - name: Project Manager Email
+          value: p.diaz@company.com
+        updated: '2020-04-03T19:12:20.000Z'
+    memoryInfo:
+      type: object
+      description: Application memory info
+      properties:
+        estMemory:
+          type: number
+          description: The estimated memory of this application in gigabytes
+        estMemoryInclDependentApps:
+          type: number
+          description: The estimated memory of this application and all dependent applications in gigabytes
+    appVariable:
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name for the variable.
+        value:
+          type: string
+          description: The value for the variable.
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

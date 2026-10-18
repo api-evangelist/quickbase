@@ -1,0 +1,21 @@
+generated: '2026-10-18'
+method: searched
+source: https://developer.quickbase.com/auth
+docs: https://developer.quickbase.com/auth
+schemes:
+- type: apiKey
+  name: QB-USER-TOKEN
+  in: header
+  description: Permanent user token for authentication
+  docs: https://developer.quickbase.com/auth
+- type: apiKey
+  name: QB-TEMP-TOKEN
+  in: header
+  description: Temporary token for client-side utilities
+  docs: https://developer.quickbase.com/auth
+- type: apiKey
+  name: QB-ACCESS-KEY
+  in: header
+  description: Can be used with Secure links on runQuery and runReport
+  docs: https://developer.quickbase.com/auth
+note: Quickbase uses API key authentication via custom headers. User tokens can be permanent or temporary. SSO tokens can be exchanged for Quickbase tokens via the Exchange an SSO token endpoint.

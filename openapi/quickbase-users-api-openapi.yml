@@ -1,0 +1,433 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Users API
+  version: 1.0.0
+  description: 'Operations tagged Users across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Users
+paths:
+  /users:
+    post:
+      tags:
+      - Users
+      summary: Get users
+      description: Get all users in an account or narrowed down list of users filtered by email(s). The returned users may be paginated depending on the user count. The count of the returned users may vary. When `nextPageToken` value in the response is not empty, that indicates that there are more results to be returned, you can use this value to get the next result set ('page'). Only realm or account admins can use this API.
+      operationId: getUsers
+      parameters:
+      - name: accountId
+        in: query
+        description: The account id being used to get users. If no value is specified, the first account associated with the requesting user token is chosen.
+        schema:
+          type: number
+        example: 1562946434000
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  uniqueItems: true
+                  type: array
+                  description: When provided, the returned users will be narrowed down only to the users included in this list.
+                  items:
+                    maxLength: 256
+                    minLength: 2
+                    pattern: ^.+@.+\..+$
+                    type: string
+                appIds:
+                  uniqueItems: true
+                  type: array
+                  description: When provided, the returned users will be narrowed down only to the users assigned to the app id's provided in this list. The provided app id's should belong to the same account.
+                  items:
+                    type: string
+                nextPageToken:
+                  type: string
+                  description: Next page token used to get the next 'page' of results when available. When this field is empty, the first page is returned.
+            examples:
+              Get first page example:
+                value:
+                  emails:
+                  - jswilson@domain.com
+                  - jon_doe@domain.com
+                  - sjackson@domain.com
+                  appIds:
+                  - ab3rd3
+                  - 23erfd
+                  - xpsd32
+                  nextPageToken: ''
+              Get next page example:
+                value:
+                  emails:
+                  - jswilson@domain.com
+                  - sjackson@domain.com
+                  appIds:
+                  - ab3rd3
+                  - 23erfd
+                  nextPageToken: bzw2a9
+        required: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - users
+                - metadata
+                properties:
+                  users:
+                    description: A list of users found in an account with the given criterias
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - userName
+                      - firstName
+                      - lastName
+                      - emailAddress
+                      - hashId
+                      properties:
+                        userName:
+                          type: string
+                        firstName:
+                          type: string
+                        lastName:
+                          type: string
+                        emailAddress:
+                          type: string
+                        hashId:
+                          type: string
+                  metadata:
+                    description: Additional request information
+                    type: object
+                    required:
+                    - nextPageToken
+                    properties:
+                      nextPageToken:
+                        type: string
+              examples:
+                All results example:
+                  value:
+                    users:
+                    - userName: jdoe
+                      firstName: Jon
+                      lastName: Doe
+                      emailAddress: jdoe@domain.com
+                      hashId: 58351651.xc1
+                    - userName: swilson
+                      firstName: Simone
+                      lastName: Wilson
+                      emailAddress: jswilson@domain.com
+                      hashId: 58351648.xc1
+                    - userName: sjackson
+                      firstName: Samuel
+                      lastName: Jackson
+                      emailAddress: sjackson@domain.com
+                      hashId: 58351643.xc1
+                    metadata:
+                      nextPageToken: ''
+                Paged results example:
+                  value:
+                    users:
+                    - userName: swilson
+                      firstName: Simone
+                      lastName: Wilson
+                      emailAddress: jswilson@domain.com
+                      hashId: 58351648.xc1
+                    - userName: sjackson
+                      firstName: Samuel
+                      lastName: Jackson
+                      emailAddress: sjackson@domain.com
+                      hashId: 58351643.xc1
+                    metadata:
+                      nextPageToken: bzw2ba
+    servers:
+    - url: https://api.quickbase.com/v1
+  /users/deny:
+    put:
+      tags:
+      - Users
+      summary: Deny users
+      description: Denies users access to the realm but leaves them listed in groups they have been added to. Only realm or account admins can use this API.
+      operationId: denyUsers
+      parameters:
+      - name: accountId
+        in: query
+        description: The account id being used to deny users. If no value is specified, the first account associated with the requesting user token is chosen.
+        schema:
+          type: number
+        example: 1562946434000
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: A list of user IDs that need to be denied.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userInput'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userDenyResponse'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /users/deny/{shouldDeleteFromGroups}:
+    put:
+      tags:
+      - Users
+      summary: Deny and remove users from groups
+      description: Denies users access to the realm and allows you to remove them from groups. Only realm or account admins can use this API.
+      operationId: denyUsersAndGroups
+      parameters:
+      - name: accountId
+        in: query
+        description: The account id being used to deny users. If no value is specified, the first account associated with the requesting user token is chosen.
+        schema:
+          type: number
+        example: 1562946434000
+      - name: shouldDeleteFromGroups
+        in: path
+        description: Specifies if the users should also be removed from all groups.
+        required: true
+        schema:
+          type: boolean
+        example: false
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: A list of user IDs that need to be denied.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userInput'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userDenyResponse'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /users/undeny:
+    put:
+      tags:
+      - Users
+      summary: Undeny users
+      description: Grants users that have previously been denied access to the realm. Only realm or account admins can use this API.
+      operationId: undenyUsers
+      parameters:
+      - name: accountId
+        in: query
+        description: The account id being used to undeny users. If no value is specified, the first account associated with the requesting user token is chosen.
+        schema:
+          type: number
+        example: 1562946434000
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: A list of user IDs that need to be undenied.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userInput'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userUndenyResponse'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /users/{userId}/apps:
+    get:
+      tags:
+      - Users
+      summary: Get apps for a user
+      description: Returns a list of applications that a specific user has access to within an account. Only account admins can use this API.
+      operationId: getUserApps
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        description: The unique identifier of the user, including the hashed value (for example, 59913288.d772).
+        schema:
+          type: string
+          example: 59913288.d772
+      - name: accountId
+        in: query
+        required: true
+        description: The account id used to scope the request.
+        schema:
+          type: number
+          example: 1562946434000
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - apps
+                properties:
+                  apps:
+                    description: A list of applications the specified user has access to.
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - id
+                      - name
+                      - lastAccess
+                      - manager
+                      properties:
+                        id:
+                          description: The unique identifier of the application.
+                          type: string
+                        name:
+                          description: The name of the application.
+                          type: string
+                        lastAccess:
+                          description: The date and time the user last accessed this application, in ISO 8601 format.
+                          type: string
+                        manager:
+                          description: The manager of the application.
+                          type: object
+                          required:
+                          - id
+                          - name
+                          properties:
+                            id:
+                              description: The hashed user ID of the application manager.
+                              type: string
+                            name:
+                              description: The full name of the application manager.
+                              type: string
+                example:
+                  apps:
+                  - id: bqgruir3g
+                    name: Project Tracker
+                    lastAccess: '2024-03-15T10:23:45Z'
+                    manager:
+                      id: 58351651.ab1s
+                      name: Jane Doe
+                  - id: cxhqvs7b2
+                    name: HR Portal
+                    lastAccess: '2024-02-20T08:15:00Z'
+                    manager:
+                      id: 58351648.vc2d
+                      name: John Smith
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    authorization:
+      name: Authorization
+      in: header
+      description: The Quickbase authentication scheme you are using to authenticate the request, as described on the [authorization page](../auth).
+      required: true
+      schema:
+        type: string
+      example: QB-USER-TOKEN xxxxxx_xxx_xxxxxxxxxxxxxxxxxxxxxxx
+    qbRealmHostname:
+      name: QB-Realm-Hostname
+      in: header
+      description: Your Quickbase domain, for example demo.quickbase.com
+      required: true
+      schema:
+        type: string
+      example: demo.quickbase.com
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+  schemas:
+    userUndenyResponse:
+      example:
+        failure:
+        - 423123.vc2d
+        - 78910.ba1s
+        success:
+        - 123456.ab1s
+      type: object
+      required:
+      - failure
+      - success
+      properties:
+        failure:
+          description: A list of users that couldn't be undenied. This also includes the ID's of users that are not valid.
+          example:
+          - 78910.qwer
+          - 3512.asd1
+          type: array
+          items:
+            type: string
+        success:
+          description: A list of users that have successfully been undenied.
+          example:
+          - 123456.ab1s
+          type: array
+          items:
+            type: string
+    userDenyResponse:
+      example:
+        failure:
+        - 423123.vc2d
+        - 78910.ba1s
+        success:
+        - 123456.ab1s
+      type: object
+      required:
+      - failure
+      - success
+      properties:
+        failure:
+          description: A list of users that couldn't be denied. This also includes the ID's of users that are not valid.
+          example:
+          - 78910.qwer
+          - 3512.asd1
+          type: array
+          items:
+            type: string
+        success:
+          description: A list of users that have successfully been denied.
+          example:
+          - 123456.ab1s
+          type: array
+          items:
+            type: string
+    userInput:
+      maxItems: 1000
+      minItems: 1
+      type: array
+      description: A list of user IDs.
+      example:
+      - 123456.ab1s
+      - 423123.vc2d
+      - 78910.ba1s
+      items:
+        type: string
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

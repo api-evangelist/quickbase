@@ -1,0 +1,372 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Platform Analytics API
+  version: 1.0.0
+  description: 'Operations tagged Platform Analytics across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Platform Analytics
+paths:
+  /analytics/reads:
+    get:
+      tags:
+      - Platform Analytics
+      summary: Get read summaries
+      description: 'Get user read and integration read summaries for any day in the past.
+
+        **Note:** This API is available for enterprise users only.'
+      operationId: platformAnalyticReads
+      parameters:
+      - name: day
+        in: query
+        required: true
+        description: The date for which read summaries need to be fetched. This must be date-time only, as YYYY-MM-DD, and a valid date in the past.
+        schema:
+          type: string
+          format: date
+          example: '2015-01-12'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Summaries returned succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: object
+                    required:
+                    - dailyDetailedReads
+                    description: The data object containing the read summaries.
+                    properties:
+                      dailyDetailedReads:
+                        type: object
+                        description: Detailed read summaries for a specific date.
+                        required:
+                        - date
+                        - reads
+                        properties:
+                          date:
+                            description: The date of the requested summary.
+                            type: string
+                            format: date
+                          reads:
+                            description: Total reads for the specified date.
+                            type: object
+                            required:
+                            - user
+                            - integrations
+                            properties:
+                              user:
+                                description: Total user reads for the realm on the specified date.
+                                type: integer
+                              integrations:
+                                description: Total integration reads for the realm on the specified date.
+                                type: object
+                                required:
+                                - eoti
+                                - api
+                                - pipelines
+                                properties:
+                                  eoti:
+                                    description: Total reads by anonymous users for the realm on the specified date.
+                                    type: integer
+                                  api:
+                                    description: Total API reads for the realm on the specified date.
+                                    type: integer
+                                  pipelines:
+                                    description: Total pipeline reads for the realm on the specified date.
+                                    type: integer
+                example:
+                  data:
+                    dailyDetailedReads:
+                      date: '2022-01-01T00:00:00.000Z'
+                      reads:
+                        integrations:
+                          api: 456
+                          eoti: 789
+                          pipelines: 432
+                        user: 123
+    servers:
+    - url: https://api.quickbase.com/v1
+  /analytics/events/summaries:
+    post:
+      tags:
+      - Platform Analytics
+      summary: Get event summaries
+      description: 'Get event summaries for any span of days up to one year and excluding future dates.
+
+        **Note:** This API is available for enterprise users only. Data is updated hourly. To ensure accuracy, query dates should be at least one hour in the past. Transactional rate limits are 100 per hour.'
+      operationId: platformAnalyticEventSummaries
+      parameters:
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      - name: accountId
+        in: query
+        description: The ID of the account to query. If no value is specified, the first account matching the provided domain is chosen.
+        schema:
+          type: number
+        example: 1234
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - start
+              - end
+              - groupBy
+              type: object
+              description: Date, GroupBy, and Filter options for Event Summaries.
+              properties:
+                start:
+                  type: string
+                  format: date-time
+                  description: 'Supply whole-hour timestamps (YYYY-MM-DDTHH:00:00Z) to ensure the boundary hour is included in results. Summary data is available in hourly chunks only. Timestamps are evaluated in UTC; if your timestamp includes a timezone offset, confirm which UTC hour it maps to. Example: A start of 2:00 PM UTC includes the 2:00 PM bucket. A sub-hour value like 2:15 PM UTC does not.'
+                end:
+                  type: string
+                  format: date-time
+                  description: 'Supply whole-hour timestamps (YYYY-MM-DDTHH:00:00Z) to ensure results stop at your intended boundary. Summary data is available in hourly chunks only. Timestamps are evaluated in UTC; if your timestamp includes a timezone offset, confirm which UTC hour it maps to. Example: An end of 3:00 PM UTC returns data through the end of the 3:00 PM bucket. A sub-hour value like 2:33 PM UTC returns the full 2:00 PM bucket instead.'
+                nextToken:
+                  type: string
+                  description: A pagination token from a previous response made using the same parameters. Used to fetch the next page.
+                groupBy:
+                  type: string
+                  description: How the events should be grouped.
+                  enum:
+                  - app
+                  - user
+                where:
+                  type: array
+                  maxItems: 10
+                  description: A list of items to filter events by. Only events which match ALL criteria will be included in the results.
+                  items:
+                    type: object
+                    required:
+                    - id
+                    - type
+                    properties:
+                      id:
+                        type: string
+                        description: Id of the item to filter by - the hash uid if filtering a user, or the app id if filtering an app.
+                      type:
+                        type: string
+                        description: The type of item to filter by.
+                        enum:
+                        - app
+                        - user
+              example:
+                start: '2023-12-01T12:00:00.000-05:00'
+                end: '2023-12-31T12:00:00.000-05:00'
+                nextToken: 6a.f12x
+                groupBy: user
+                where:
+                - id: 58351651.xc1
+                  type: user
+                - id: bpqe82s1
+                  type: app
+      responses:
+        '200':
+          description: Event summaries returned succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: object
+                    required:
+                    - eventsSummaries
+                    properties:
+                      eventsSummaries:
+                        type: object
+                        required:
+                        - accountId
+                        - start
+                        - end
+                        - groupBy
+                        - where
+                        - results
+                        properties:
+                          accountId:
+                            description: The ID of the account the events are associated with.
+                            type: string
+                          start:
+                            description: Reflects the hourly-resolution constraints of the request parameters. See start and end above.
+                            type: string
+                            format: date-time
+                          end:
+                            description: Reflects the hourly-resolution constraints of the request parameters. See start and end above.
+                            type: string
+                            format: date-time
+                          groupBy:
+                            type: string
+                            description: How the events should be grouped.
+                            enum:
+                            - app
+                            - user
+                          where:
+                            type: array
+                            items:
+                              type: object
+                              required:
+                              - id
+                              - type
+                              properties:
+                                id:
+                                  type: string
+                                  description: Id of the item to filter by.
+                                type:
+                                  type: string
+                                  description: The type of item to filter by.
+                                  enum:
+                                  - app
+                                  - user
+                          results:
+                            description: An array of objects that contains Application/User information and an events object with summaries by event type.
+                            type: array
+                            items:
+                              type: object
+                              required:
+                              - id
+                              - name
+                              - totals
+                              - eventTypes
+                              properties:
+                                id:
+                                  description: Id of the Application/User.
+                                  type: string
+                                name:
+                                  description: Name of the Application/User.
+                                  type: string
+                                totals:
+                                  description: Totals by billing category for the event grouping.
+                                  type: object
+                                  properties:
+                                    integration:
+                                      type: number
+                                    user:
+                                      type: number
+                                    all:
+                                      type: number
+                                eventTypes:
+                                  description: An array of events that contains specific information associated with an Application/User broken down by event type.
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      eventType:
+                                        description: Event type
+                                        type: string
+                                      count:
+                                        description: Count of events associated with that event type and Application/User.
+                                        type: integer
+                                      billingCategory:
+                                        description: Billing category of the event type.
+                                        type: string
+                                        enum:
+                                        - user
+                                        - integration
+                          metadata:
+                            description: Additional information about the results that may be helpful.
+                            type: object
+                            required:
+                            - nextToken
+                            properties:
+                              nextToken:
+                                description: Supply this token in a subsequent request to fetch the next page of results.
+                                type: string
+                          totals:
+                            description: Totals by billing category for all queried events.
+                            type: object
+                            properties:
+                              integration:
+                                type: number
+                              user:
+                                type: number
+                              all:
+                                type: number
+                example:
+                  data:
+                    eventsSummaries:
+                      accountId: '1234'
+                      start: '2023-12-01T05:00:00Z'
+                      end: '2023-12-31T05:00:00Z'
+                      groupBy: user
+                      where:
+                      - id: 58351651.xc1
+                        type: user
+                      - id: bpqe82s1
+                        type: app
+                      results:
+                      - id: 58351651.xc1
+                        name: Jon Doe
+                        eventTypes:
+                        - eventType: api
+                          count: 794
+                          billingCategory: integration
+                        - eventType: eoti
+                          count: 0
+                          billingCategory: integration
+                        - eventType: stepruns
+                          count: 203
+                          billingCategory: integration
+                        - eventType: plugin
+                          count: 0
+                          billingCategory: user
+                        - eventType: appDashboard
+                          count: 36
+                          billingCategory: user
+                        - eventType: tableDashboard
+                          count: 0
+                          billingCategory: user
+                        - eventType: form
+                          count: 419
+                          billingCategory: user
+                        - eventType: report
+                          count: 0
+                          billingCategory: user
+                      totals:
+                        integration: 997
+                        user: 455
+                        all: 1452
+                      metadata:
+                        nextToken: 6a.f12x
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    authorization:
+      name: Authorization
+      in: header
+      description: The Quickbase authentication scheme you are using to authenticate the request, as described on the [authorization page](../auth).
+      required: true
+      schema:
+        type: string
+      example: QB-USER-TOKEN xxxxxx_xxx_xxxxxxxxxxxxxxxxxxxxxxx
+    qbRealmHostname:
+      name: QB-Realm-Hostname
+      in: header
+      description: Your Quickbase domain, for example demo.quickbase.com
+      required: true
+      schema:
+        type: string
+      example: demo.quickbase.com
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

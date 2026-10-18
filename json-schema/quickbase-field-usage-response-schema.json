@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/quickbase/main/json-schema/quickbase-field-usage-response-schema.json",
+  "title": "fieldUsageResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/quickbase-openapi.yml#/components/schemas/fieldUsageResponse",
+  "type": "array",
+  "items": {
+    "required": [
+      "field",
+      "usage"
+    ],
+    "type": "object",
+    "properties": {
+      "field": {
+        "required": [
+          "id",
+          "name",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Field name."
+          },
+          "id": {
+            "type": "integer",
+            "description": "Field id."
+          },
+          "type": {
+            "type": "string",
+            "description": "Field type."
+          }
+        },
+        "description": "Basic information about the field."
+      },
+      "usage": {
+        "required": [
+          "actions",
+          "appHomePages",
+          "dashboards",
+          "defaultReports",
+          "exactForms",
+          "fields",
+          "forms",
+          "notifications",
+          "personalReports",
+          "pipelines",
+          "relationships",
+          "reminders",
+          "reports",
+          "roles",
+          "tableImports",
+          "tableRules",
+          "webhooks"
+        ],
+        "type": "object",
+        "properties": {
+          "actions": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of quickbase actions where the given field is referenced."
+          },
+          "appHomePages": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of app home pages where the given field is referenced."
+          },
+          "dashboards": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of dashboards where the given field is referenced."
+          },
+          "exactForms": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of exact forms where the given field is referenced."
+          },
+          "defaultReports": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of default reports where the given field is referenced."
+          },
+          "fields": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of fields where the given field is referenced."
+          },
+          "forms": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of forms where the given field is referenced."
+          },
+          "personalReports": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of personal reports where the given field is referenced."
+          },
+          "pipelines": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of pipelines where the given field is referenced."
+          },
+          "notifications": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of notifications where the given field is referenced."
+          },
+          "relationships": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of relationships where the given field is referenced."
+          },
+          "reminders": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of reminders where the given field is referenced."
+          },
+          "reports": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of reports where the given field is referenced."
+          },
+          "roles": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of roles where the given field is referenced."
+          },
+          "tableImports": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of table imports where the given field is referenced."
+          },
+          "tableRules": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of table rules where the given field is referenced."
+          },
+          "webhooks": {
+            "required": [
+              "count"
+            ],
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "description": "the number of times a field has been used for the given item."
+              }
+            },
+            "description": "The number of webhooks where the given field is referenced."
+          }
+        },
+        "description": "Usage Information about the field."
+      }
+    }
+  }
+}

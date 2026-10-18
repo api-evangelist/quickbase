@@ -1,0 +1,32 @@
+generated: '2026-10-18'
+method: searched
+generator: extract-docs-artifacts.py (deepseek)
+source: https://help.quickbase.com/docs/rate-limiting-overview.md
+sources:
+- https://help.quickbase.com/docs/rate-limiting-overview.md
+name: Quickbase rate limits
+limits:
+- name: General traffic limit
+  limit_text: 10-15 traffic requests/second to your apps
+  window: second
+  scope: app
+- name: Code pages limit
+  limit_text: less than 4 requests per second to all code pages in the app
+  max: 4
+  window: second
+  scope: app
+- name: XML API limit
+  limit_text: 10 requests/second/table
+  max: 10
+  window: second
+  scope: table
+- name: RESTful API limit
+  limit_text: 100 requests per 10 seconds per user token
+  max: 100
+  window: 10 seconds
+  scope: user token
+headers:
+- retry-after
+exhaustion_status: 429
+note: The page mentions that some RESTful API endpoints have different limits included in their documentation
+docs: https://help.quickbase.com/docs/rate-limiting-overview.md

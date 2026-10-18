@@ -1,0 +1,46 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist security overlay for Quickbase RESTful JSON API
+  version: 1.0.0
+extends: ../openapi/_original/quickbase-openapi.yml
+x-generated: '2026-10-18'
+x-method: generated
+x-source: https://developer.quickbase.com/auth
+x-rationale: >-
+  The captured OpenAPI (openapi/_original/qb-openapi-v3.json, served at
+  https://developer.quickbase.com/qb-openapi-v3.json) models authentication only
+  as a required `Authorization` header PARAMETER (components.parameters.authorization)
+  and declares no components.securitySchemes and no root security requirement.
+  Quickbase's Authorization page documents three header forms:
+  `QB-USER-TOKEN {TOKEN}` (permanent user token), `QB-TEMP-TOKEN {TOKEN}`
+  (temporary token from getTempTokenDBID) and `QB-ACCESS-KEY {KEY}` (secure links,
+  runQuery and runReport only). This overlay adds those as a declared security
+  scheme and a root requirement WITHOUT mutating the original spec.
+actions:
+  - target: $.components
+    description: Declare the Authorization-header token scheme documented at developer.quickbase.com/auth.
+    update:
+      securitySchemes:
+        quickbaseToken:
+          type: apiKey
+          in: header
+          name: Authorization
+          description: >-
+            Send `Authorization: QB-USER-TOKEN {TOKEN}` for a permanent user token,
+            `QB-TEMP-TOKEN {TOKEN}` for a temporary token (see getTempTokenDBID), or
+            `QB-ACCESS-KEY {KEY}` with secure links on runQuery and runReport. Every
+            call also requires the `QB-Realm-Hostname` header (e.g. demo.quickbase.com).
+            Never store a permanent user token client-side.
+  - target: $
+    description: Apply the token scheme to every operation by default.
+    update:
+      security:
+        - quickbaseToken: []
+  - target: $.info
+    description: Point agents at the human docs for auth and headers.
+    update:
+      x-apievangelist-docs:
+        authorization: https://developer.quickbase.com/auth
+        headers: https://developer.quickbase.com/headers
+        errors: https://developer.quickbase.com/errors
+        pagination: https://developer.quickbase.com/pagination

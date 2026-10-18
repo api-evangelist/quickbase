@@ -1,0 +1,363 @@
+generated: '2026-10-18'
+method: derived
+type: MCPServer
+name: Quickbase MCP (candidate)
+status: candidate
+source: openapi/quickbase-openapi.yml
+description: >-
+  No official, Quickbase-published MCP server was found. Quickbase's help-site
+  llms.txt (https://help.quickbase.com/llms.txt, 2,179 pages) contains no MCP page,
+  the pre-flight docs probe found no MCP docs, and web searches on 2026-10-18 returned
+  only third-party/community servers (listed below, NOT Quickbase's). The tool list
+  below is a CANDIDATE derived one-to-one from operationIds in the Quickbase RESTful
+  JSON API 3.0.1 OpenAPI; nobody ships it.
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+third_party_servers:
+  - name: danielbushman/MCP-Quickbase
+    url: https://glama.ai/mcp/servers/danielbushman/MCP-Quickbase
+    note: Community TypeScript server; states it is not an official Quickbase product.
+  - name: quickbase-mcp-server-by-cdata
+    url: https://github.com/CDataSoftware/quickbase-mcp-server-by-cdata
+    note: CData read-only stdio server over CData JDBC driver.
+  - name: Activepieces Quickbase MCP
+    url: https://www.activepieces.com/mcp/quickbase
+    note: Third-party hosted integration platform.
+tools:
+  - name: createApp
+    description: Create an app
+    operation: POST /apps
+    readOnly: false
+    destructive: false
+  - name: getApp
+    description: Get an app
+    operation: GET /apps/{appId}
+    readOnly: true
+    destructive: false
+  - name: updateApp
+    description: Update an app
+    operation: POST /apps/{appId}
+    readOnly: false
+    destructive: false
+  - name: deleteApp
+    description: Delete an app
+    operation: DELETE /apps/{appId}
+    readOnly: false
+    destructive: true
+  - name: getAppEvents
+    description: Get app events
+    operation: GET /apps/{appId}/events
+    readOnly: true
+    destructive: false
+  - name: copyApp
+    description: Copy an app
+    operation: POST /apps/{appId}/copy
+    readOnly: false
+    destructive: false
+  - name: getRoles
+    description: Get app roles
+    operation: GET /apps/{appId}/roles
+    readOnly: true
+    destructive: false
+  - name: getAppTables
+    description: Get tables for an app
+    operation: GET /tables
+    readOnly: true
+    destructive: false
+  - name: createTable
+    description: Create a table
+    operation: POST /tables
+    readOnly: false
+    destructive: false
+  - name: getTable
+    description: Get a table
+    operation: GET /tables/{tableId}
+    readOnly: true
+    destructive: false
+  - name: updateTable
+    description: Update a table
+    operation: POST /tables/{tableId}
+    readOnly: false
+    destructive: false
+  - name: deleteTable
+    description: Delete a table
+    operation: DELETE /tables/{tableId}
+    readOnly: false
+    destructive: true
+  - name: getRelationships
+    description: Get all relationships
+    operation: GET /tables/{tableId}/relationships
+    readOnly: true
+    destructive: false
+  - name: createRelationship
+    description: Create a relationship
+    operation: POST /tables/{tableId}/relationship
+    readOnly: false
+    destructive: false
+  - name: updateRelationship
+    description: Update a relationship
+    operation: POST /tables/{tableId}/relationship/{relationshipId}
+    readOnly: false
+    destructive: false
+  - name: deleteRelationship
+    description: Delete a relationship
+    operation: DELETE /tables/{tableId}/relationship/{relationshipId}
+    readOnly: false
+    destructive: true
+  - name: getTableReports
+    description: Get reports for a table
+    operation: GET /reports
+    readOnly: true
+    destructive: false
+  - name: getReport
+    description: Get a report
+    operation: GET /reports/{reportId}
+    readOnly: true
+    destructive: false
+  - name: runReport
+    description: Run a report
+    operation: POST /reports/{reportId}/run
+    readOnly: true
+    destructive: false
+  - name: getFields
+    description: Get fields for a table
+    operation: GET /fields
+    readOnly: true
+    destructive: false
+  - name: createField
+    description: Create a field
+    operation: POST /fields
+    readOnly: false
+    destructive: false
+  - name: deleteFields
+    description: Delete field(s)
+    operation: DELETE /fields
+    readOnly: false
+    destructive: true
+  - name: getField
+    description: Get field
+    operation: GET /fields/{fieldId}
+    readOnly: true
+    destructive: false
+  - name: updateField
+    description: Update a field
+    operation: POST /fields/{fieldId}
+    readOnly: false
+    destructive: false
+  - name: getFieldsUsage
+    description: Get usage for all fields
+    operation: GET /fields/usage
+    readOnly: true
+    destructive: false
+  - name: getFieldUsage
+    description: Get usage for a field
+    operation: GET /fields/usage/{fieldId}
+    readOnly: true
+    destructive: false
+  - name: runFormula
+    description: Run a formula
+    operation: POST /formula/run
+    readOnly: true
+    destructive: false
+  - name: upsert
+    description: Insert/Update record(s)
+    operation: POST /records
+    readOnly: false
+    destructive: false
+  - name: deleteRecords
+    description: Delete record(s)
+    operation: DELETE /records
+    readOnly: false
+    destructive: true
+  - name: runQuery
+    description: Query for data
+    operation: POST /records/query
+    readOnly: true
+    destructive: false
+  - name: recordsModifiedSince
+    description: Get records modified since
+    operation: POST /records/modifiedSince
+    readOnly: true
+    destructive: false
+  - name: getTempTokenDBID
+    description: Get a temporary token for a dbid
+    operation: GET /auth/temporary/{dbid}
+    readOnly: true
+    destructive: false
+  - name: exchangeSsoToken
+    description: Exchange an SSO token
+    operation: POST /auth/oauth/token
+    readOnly: false
+    destructive: false
+  - name: cloneUserToken
+    description: Clone a user token
+    operation: POST /usertoken/clone
+    readOnly: false
+    destructive: false
+  - name: transferUserToken
+    description: Transfer a user token
+    operation: POST /usertoken/transfer
+    readOnly: false
+    destructive: false
+  - name: deactivateUserToken
+    description: Deactivate a user token
+    operation: POST /usertoken/deactivate
+    readOnly: false
+    destructive: true
+  - name: deleteUserToken
+    description: Delete a user token
+    operation: DELETE /usertoken
+    readOnly: false
+    destructive: true
+  - name: downloadFile
+    description: Download file
+    operation: GET /files/{tableId}/{recordId}/{fieldId}/{versionNumber}
+    readOnly: true
+    destructive: false
+  - name: deleteFile
+    description: Delete file
+    operation: DELETE /files/{tableId}/{recordId}/{fieldId}/{versionNumber}
+    readOnly: false
+    destructive: true
+  - name: getUsers
+    description: Get users
+    operation: POST /users
+    readOnly: true
+    destructive: false
+  - name: denyUsers
+    description: Deny users
+    operation: PUT /users/deny
+    readOnly: false
+    destructive: true
+  - name: denyUsersAndGroups
+    description: Deny and remove users from groups
+    operation: PUT /users/deny/{shouldDeleteFromGroups}
+    readOnly: false
+    destructive: true
+  - name: undenyUsers
+    description: Undeny users
+    operation: PUT /users/undeny
+    readOnly: false
+    destructive: false
+  - name: getUserApps
+    description: Get apps for a user
+    operation: GET /users/{userId}/apps
+    readOnly: true
+    destructive: false
+  - name: addMembersToGroup
+    description: Add members
+    operation: POST /groups/{gid}/members
+    readOnly: false
+    destructive: false
+  - name: removeMembersFromGroup
+    description: Remove members
+    operation: DELETE /groups/{gid}/members
+    readOnly: false
+    destructive: true
+  - name: addManagersToGroup
+    description: Add managers
+    operation: POST /groups/{gid}/managers
+    readOnly: false
+    destructive: false
+  - name: removeManagersFromGroup
+    description: Remove managers
+    operation: DELETE /groups/{gid}/managers
+    readOnly: false
+    destructive: true
+  - name: addSubgroupsToGroup
+    description: Add child groups
+    operation: POST /groups/{gid}/subgroups
+    readOnly: false
+    destructive: false
+  - name: removeSubgroupsFromGroup
+    description: Remove child groups
+    operation: DELETE /groups/{gid}/subgroups
+    readOnly: false
+    destructive: true
+  - name: audit
+    description: Get audit logs
+    operation: POST /audit
+    readOnly: true
+    destructive: false
+  - name: platformAnalyticReads
+    description: Get read summaries
+    operation: GET /analytics/reads
+    readOnly: true
+    destructive: false
+  - name: platformAnalyticEventSummaries
+    description: Get event summaries
+    operation: POST /analytics/events/summaries
+    readOnly: true
+    destructive: false
+  - name: generateDocument
+    description: Generate a document
+    operation: GET /docTemplates/{templateId}/generate
+    readOnly: true
+    destructive: false
+  - name: exportSolution
+    description: Export a solution
+    operation: GET /solutions/{solutionId}
+    readOnly: true
+    destructive: false
+  - name: updateSolution
+    description: Update a solution
+    operation: PUT /solutions/{solutionId}
+    readOnly: false
+    destructive: false
+  - name: createSolution
+    description: Create a solution
+    operation: POST /solutions
+    readOnly: false
+    destructive: false
+  - name: exportSolutionToRecord
+    description: Export solution to record
+    operation: GET /solutions/{solutionId}/torecord
+    readOnly: true
+    destructive: false
+  - name: createSolutionFromRecord
+    description: Create solution from record
+    operation: GET /solutions/fromrecord
+    readOnly: true
+    destructive: false
+  - name: updateSolutionFromRecord
+    description: Update solution from record
+    operation: GET /solutions/{solutionId}/fromrecord
+    readOnly: true
+    destructive: false
+  - name: changesetSolution
+    description: List solution changes
+    operation: PUT /solutions/{solutionId}/changeset
+    readOnly: false
+    destructive: false
+  - name: changesetSolutionFromRecord
+    description: List solution changes from record
+    operation: GET /solutions/{solutionId}/changeset/fromrecord
+    readOnly: true
+    destructive: false
+  - name: getSolutionPublic
+    description: Get solution information
+    operation: GET /solutions/{solutionId}/resources
+    readOnly: true
+    destructive: false
+  - name: getTrustees
+    description: Get trustees for an app
+    operation: GET /app/{appId}/trustees
+    readOnly: true
+    destructive: false
+  - name: addTrustees
+    description: Add trustees to an app
+    operation: POST /app/{appId}/trustees
+    readOnly: false
+    destructive: false
+  - name: removeTrustees
+    description: Remove trustees from an app
+    operation: DELETE /app/{appId}/trustees
+    readOnly: false
+    destructive: true
+  - name: updateTrustees
+    description: Update trustees of an app
+    operation: PATCH /app/{appId}/trustees
+    readOnly: false
+    destructive: false

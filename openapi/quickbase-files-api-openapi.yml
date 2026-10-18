@@ -1,0 +1,166 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Files API
+  version: 1.0.0
+  description: 'Operations tagged Files across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Files
+paths:
+  /files/{tableId}/{recordId}/{fieldId}/{versionNumber}:
+    get:
+      tags:
+      - Files
+      summary: Download file
+      description: Downloads the file attachment, with the file attachment content encoded in base64 format. The API response returns the file name in the `Content-Disposition` header. Meta-data about files can be retrieved from the /records and /reports endpoints, where applicable. Use those endpoints to get the necessary information to fetch files.
+      operationId: downloadFile
+      parameters:
+      - $ref: '#/components/parameters/pathTableId'
+      - name: recordId
+        in: path
+        description: The unique identifier of the record.
+        required: true
+        schema:
+          type: integer
+        example: 1
+      - $ref: '#/components/parameters/pathFieldId'
+      - name: versionNumber
+        in: path
+        description: The file attachment version number.
+        required: true
+        schema:
+          type: integer
+        example: 1
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                type: string
+                description: Base64 encoded file content.
+                example: UXVpY2sgQmFzZSBJbmMu
+    delete:
+      tags:
+      - Files
+      summary: Delete file
+      description: Deletes one file attachment version. Meta-data about files can be retrieved from the /records and /reports endpoints, where applicable. Use those endpoints to get the necessary information to delete file versions.
+      operationId: deleteFile
+      parameters:
+      - $ref: '#/components/parameters/pathTableId'
+      - name: recordId
+        in: path
+        description: The unique identifier of the record.
+        required: true
+        schema:
+          type: integer
+        example: 1
+      - $ref: '#/components/parameters/pathFieldId'
+      - name: versionNumber
+        in: path
+        description: The file attachment version number. Passing versionNumber 0 will delete the most recent version.
+        required: true
+        schema:
+          type: integer
+        example: 1
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successfully Deleted the File Attachment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  versionNumber:
+                    description: The number of deleted version.
+                    type: integer
+                  fileName:
+                    description: The name of file associated with deleted version.
+                    type: string
+                  uploaded:
+                    description: The timestamp when the version was originally uploaded.
+                    type: string
+                  creator:
+                    description: The user that uploaded version.
+                    type: object
+                    properties:
+                      name:
+                        description: User full name.
+                        type: string
+                      id:
+                        description: User Id.
+                        type: string
+                      email:
+                        description: User email.
+                        type: string
+                      userName:
+                        description: User Name as updated in user properties. Optional, appears if not the same as user email.
+                        type: string
+                example:
+                  versionNumber: 1
+                  fileName: file.pdf
+                  uploaded: '2019-12-18T08:00:00.000Z'
+                  creator:
+                    email: jsmith@quickbase.com
+                    id: 123456.ab1s
+                    name: Juliet Smith
+                    userName: jsmith
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    authorization:
+      name: Authorization
+      in: header
+      description: The Quickbase authentication scheme you are using to authenticate the request, as described on the [authorization page](../auth).
+      required: true
+      schema:
+        type: string
+      example: QB-USER-TOKEN xxxxxx_xxx_xxxxxxxxxxxxxxxxxxxxxxx
+    pathFieldId:
+      name: fieldId
+      in: path
+      description: The unique identifier (fid) of the field.
+      required: true
+      schema:
+        type: integer
+      example: 1
+    qbRealmHostname:
+      name: QB-Realm-Hostname
+      in: header
+      description: Your Quickbase domain, for example demo.quickbase.com
+      required: true
+      schema:
+        type: string
+      example: demo.quickbase.com
+    pathTableId:
+      name: tableId
+      in: path
+      description: The unique identifier (dbid) of the table.
+      required: true
+      allowReserved: true
+      schema:
+        $ref: '#/components/schemas/tableIdSimple'
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+  schemas:
+    tableIdSimple:
+      type: string
+      pattern: ^\w+$
+      description: The unique identifier (dbid) of the table.
+      example: bck7gp3q2
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

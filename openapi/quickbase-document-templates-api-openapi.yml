@@ -1,0 +1,195 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Document Templates API
+  version: 1.0.0
+  description: 'Operations tagged Document Templates across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Document Templates
+paths:
+  /docTemplates/{templateId}/generate:
+    get:
+      tags:
+      - Document Templates
+      summary: Generate a document
+      description: Generates a document from a template. After changing a template, allow up to 15 minutes for documents generated via the API to reflect the changes. This feature is only available on business or enterprise plans.
+      operationId: generateDocument
+      parameters:
+      - $ref: '#/components/parameters/queryTableId'
+      - $ref: '#/components/parameters/queryRecordId'
+      - $ref: '#/components/parameters/queryFileName'
+      - $ref: '#/components/parameters/pathTemplateId'
+      - name: QB-Realm-Hostname
+        in: header
+        description: Your Quickbase domain, for example demo.quickbase.com
+        required: false
+        schema:
+          type: string
+        example: demo.quickbase.com
+      - $ref: '#/components/parameters/userAgent'
+      - name: Authorization
+        in: header
+        description: The Quickbase authentication scheme you are using to authenticate the request, as described on the [authorization page](../auth).
+        required: false
+        schema:
+          type: string
+        example: QB-USER-TOKEN xxxxxx_xxx_xxxxxxxxxxxxxxxxxxxxxxx
+      - name: Accept
+        in: header
+        description: The content-type of the response. application/json will return a JSON payload with a base64 encoded file. application/octet-stream will download the file directly.
+        required: false
+        schema:
+          type: string
+        example: application/json
+      - name: format
+        in: query
+        description: The format of the file that is returned. Default is "pdf".
+        schema:
+          type: string
+          enum:
+          - html
+          - pdf
+          - docx
+        example: pdf
+      - name: margin
+        in: query
+        description: Margin formatted as top right bottom left, separated by spaces. Add to override the value set in the template builder.
+        required: false
+        schema:
+          type: string
+        example: 1 1 1 1
+      - name: unit
+        in: query
+        description: Unit of measurement for the margin. Default is "in". Add to override the value set in the template builder.
+        required: false
+        schema:
+          type: string
+          enum:
+          - in
+          - cm
+          - nm
+          - px
+        example: in
+      - name: pageSize
+        in: query
+        description: Page size. Default is "A4". Add to override the value set in the template builder.
+        required: false
+        schema:
+          type: string
+          enum:
+          - Letter
+          - Legal
+          - Tabloid
+          - A3
+          - A4
+          - A5
+          - A6
+        example: Letter
+      - name: orientation
+        in: query
+        description: Page orientation. Default is "portrait". Add to override the value set in the template builder.
+        required: false
+        schema:
+          type: string
+          enum:
+          - portrait
+          - landscape
+        example: portrait
+      - name: realm
+        in: query
+        description: Your Quickbase domain, for example demo.quickbase.com
+        required: false
+        schema:
+          type: string
+        example: demo.quickbase.com
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                properties:
+                  fileName:
+                    type: string
+                    description: The file name.
+                  data:
+                    type: string
+                    description: Base64 encoded file content.
+                  contentType:
+                    type: string
+                    description: The document content type.
+                example:
+                  fileName: Document.pdf
+                  data: data
+                  contentType: application/pdf
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+            text/html:
+              schema:
+                type: string
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+              schema:
+                type: string
+                format: binary
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    queryTableId:
+      name: tableId
+      in: query
+      description: The unique identifier (dbid) of the table.
+      required: true
+      allowReserved: true
+      schema:
+        $ref: '#/components/schemas/tableId'
+    queryFileName:
+      name: filename
+      in: query
+      description: File name for the downloaded file
+      required: false
+      allowReserved: true
+      schema:
+        type: string
+      example: Document
+    pathTemplateId:
+      name: templateId
+      in: path
+      description: This is the ID of document template.
+      required: true
+      schema:
+        type: integer
+      example: 1
+    queryRecordId:
+      name: recordId
+      in: query
+      description: The ID of the record
+      required: false
+      schema:
+        type: integer
+      example: 1
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+  schemas:
+    tableId:
+      type: string
+      pattern: ^(\w+\/\(\w+\)|\w+)$
+      description: The unique identifier (dbid) of the table.
+      example: bck7gp3q2
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

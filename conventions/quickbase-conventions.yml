@@ -1,0 +1,40 @@
+generated: '2026-10-18'
+method: searched
+source: https://developer.quickbase.com/pagination, https://developer.quickbase.com/headers, https://help.quickbase.com/docs/rate-limiting-overview.md
+pagination:
+  style: offset-based
+  parameters:
+    skip: Number of records to skip
+    top: Maximum number of records requested
+  response_fields:
+    metadata.totalRecords: Total number of records in result set
+    metadata.numRecords: Number of records in current response
+    metadata.skip: Number of records skipped
+    metadata.top: Maximum records requested
+  docs: https://developer.quickbase.com/pagination
+rate_limit_signaling:
+  headers:
+    - retry-after: Indicates how long to wait before making new request (429 response)
+  status_code: 429
+  docs: https://developer.quickbase.com/headers
+request_tracing:
+  headers:
+    - qb-api-ray: Unique identifier for specific request
+  docs: https://developer.quickbase.com/headers
+idempotency:
+  coverage: none
+  evidence: No idempotency key parameter found on mutating operations in OpenAPI spec
+reversibility:
+  coverage: partial
+  evidence: Some operations support reversal through specific endpoints but no comprehensive reversal mechanism documented
+  docs: https://help.quickbase.com/docs
+error_envelope:
+  format: json
+  fields:
+    message: Error message
+    description: Detailed error description
+  docs: https://developer.quickbase.com/errors
+content_type:
+  request: application/json
+  response: application/json
+  docs: https://developer.quickbase.com/headers

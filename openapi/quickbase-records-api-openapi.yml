@@ -1,0 +1,653 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Records API
+  version: 1.0.0
+  description: 'Operations tagged Records across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Records
+paths:
+  /records:
+    post:
+      tags:
+      - Records
+      summary: Insert/Update record(s)
+      description: 'Insert and/or update record(s) in a table. In this single API call, inserts and updates can be submitted. Update can use the key field on the table, or any other supported unique field. Refer to the Field types page for more information about how each field type should be formatted. This operation allows for incremental processing of successful records, even when some of the records fail.
+
+        **Note:** This endpoint supports a maximum payload size of 40MB.'
+      operationId: upsert
+      parameters:
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - to
+              - data
+              type: object
+              properties:
+                to:
+                  $ref: '#/components/schemas/tableId'
+                data:
+                  type: array
+                  minItems: 1
+                  description: Record data array, where each record contains key-value mappings of fields to be defined/updated and their values.
+                mergeFieldId:
+                  description: The merge field id.
+                  x-preferred-type: integer
+                  oneOf:
+                  - type: integer
+                    description: The merge field id.
+                    example: 7
+                  - type: string
+                    pattern: ^\d+$
+                    minLength: 1
+                    maxLength: 10
+                fieldsToReturn:
+                  type: array
+                  description: Specify an array of field IDs that will return data for any updates or added record. Record ID (FID 3) is always returned if any field ID is requested.
+                  items:
+                    x-preferred-type: integer
+                    oneOf:
+                    - type: integer
+                    - type: string
+                      pattern: ^\d+$
+                      minLength: 1
+                      maxLength: 10
+            examples:
+              Insert record:
+                value:
+                  to: bck7gp3q2
+                  data:
+                  - '6':
+                      value: This is my text
+                    '7':
+                      value: 10
+                    '8':
+                      value: '2019-12-18T08:00:00.000Z'
+                    '9':
+                      value:
+                      - a
+                      - b
+                    '10':
+                      value: true
+                    '11':
+                      value: user@quickbase.com
+                    '12':
+                      value: www.quickbase.com
+                    '13':
+                      value:
+                      - id: 123456.ab1s
+                      - id: 254789.mkgp
+                      - id: 789654.vc2s
+                  fieldsToReturn:
+                  - 6
+                  - 7
+                  - 8
+                  - 9
+                  - 10
+                  - 11
+                  - 12
+                  - 13
+              Update existing record:
+                description: For updating an existing record, add a mapping of the table key field ID (defaults to '3') to the record ID, in the data array. In the following example, we update the first record.
+                value:
+                  to: bck7gp3q2
+                  data:
+                  - '3':
+                      value: 1
+                    '6':
+                      value: This is my new text
+                    '7':
+                      value: 20
+                    '9':
+                      value:
+                      - c
+                      - d
+                    '10':
+                      value: false
+                    '11':
+                      value: newuser@quickbase.com
+                  fieldsToReturn:
+                  - 6
+                  - 7
+                  - 9
+                  - 10
+                  - 11
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                description: A successful response that includes details on the records added, updated or unchanged. In the example below, the table previously had ten records with IDs from 1 through 10. The user posts an upsert that updates the value of record 1 and adds two new records, all successfully.
+                example:
+                  data:
+                  - '3':
+                      value: 1
+                    '6':
+                      value: Updating this record
+                    '7':
+                      value: 10
+                    '8':
+                      value: '2019-12-18T08:00:00.000Z'
+                  - '3':
+                      value: 11
+                    '6':
+                      value: This is my text
+                    '7':
+                      value: 15
+                    '8':
+                      value: '2019-12-19T08:00:00.000Z'
+                  - '3':
+                      value: 12
+                    '6':
+                      value: This is my other text
+                    '7':
+                      value: 20
+                    '8':
+                      value: '2019-12-20T08:00:00.000Z'
+                  metadata:
+                    createdRecordIds:
+                    - 11
+                    - 12
+                    totalNumberOfRecordsProcessed: 3
+                    unchangedRecordIds: []
+                    updatedRecordIds:
+                    - 1
+                type: object
+                properties:
+                  metadata:
+                    description: Information about created records, updated records, referenced but unchanged records, and records having any errors while being processed.
+                    type: object
+                    properties:
+                      createdRecordIds:
+                        description: Array containing the created record ids.
+                        type: array
+                        items:
+                          type: integer
+                      lineErrors:
+                        description: This will only be returned in the case of failed records. It is a collection of errors that occurred when processing the incoming data that resulted in records not being processed. Each object has a key representing the sequence number of the record in the original payload (starting from 1). The value is a list of errors occurred.
+                        type: object
+                      unchangedRecordIds:
+                        description: Array containing the unchanged record ids.
+                        type: array
+                        items:
+                          type: integer
+                      updatedRecordIds:
+                        description: Array containing the updated record ids.
+                        type: array
+                        items:
+                          type: integer
+                      totalNumberOfRecordsProcessed:
+                        description: Number of records processed. Includes successful and failed record updates.
+                        type: integer
+                  data:
+                    description: The data that is expected to be returned.
+                    type: array
+        '207':
+          description: ''
+          content:
+            application/json:
+              schema:
+                description: "Receiving this status code indicates that some (or all) of the individual records being handled had problems and were not processed successfully. The response will be reported under the 'lineErrors' element and indicate the total number of records processed and the errors that occurred with each record. The record IDs of records created, updated, and referenced but unchanged, will be returned in the 'createdRecordIds', 'updatedRecordIds', and 'unchangedRecordIds' elements respectively.  \nIn the example below, a user tries to add three records to a table that previously had ten records with IDs from 1 through 10. The first and third records of the request are valid and create the 11th and 12th records in the table; the second record has a problem that prevents it from being processed."
+                example:
+                  data: []
+                  metadata:
+                    createdRecordIds:
+                    - 11
+                    - 12
+                    lineErrors:
+                      '2':
+                      - Incompatible value for field with ID "6".
+                    totalNumberOfRecordsProcessed: 3
+                    unchangedRecordIds: []
+                    updatedRecordIds: []
+                type: object
+                properties:
+                  metadata:
+                    description: Information about created records, updated records, referenced but unchanged records, and records having any errors while being processed.
+                    type: object
+                    properties:
+                      createdRecordIds:
+                        description: Array containing the created record ids.
+                        type: array
+                        items:
+                          type: integer
+                      lineErrors:
+                        description: This will only be returned in the case of failed records. It is a collection of errors that occurred when processing the incoming data that resulted in records not being processed. Each object has a key representing the sequence number of the record in the original payload (starting from 1). The value is a list of errors occurred.
+                        type: object
+                      unchangedRecordIds:
+                        description: Array containing the unchanged record ids.
+                        type: array
+                        items:
+                          type: integer
+                      updatedRecordIds:
+                        description: Array containing the updated record ids.
+                        type: array
+                        items:
+                          type: integer
+                      totalNumberOfRecordsProcessed:
+                        description: Number of records processed. Includes successful and failed record updates.
+                        type: integer
+                  data:
+                    description: The data that is expected to be returned.
+                    type: array
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                description: There was problem in the format of the request. This prevented the entire request from processing any records. The error response will be in the [standard format](../errors).
+                example:
+                  message: Bad Request
+                  description: Data object cannot be empty.
+                type: object
+                properties:
+                  message:
+                    description: The type of error found.
+                    type: string
+                  description:
+                    description: The description for the occurence of the error.
+                    type: string
+    delete:
+      tags:
+      - Records
+      summary: Delete record(s)
+      description: Deletes record(s) in a table based on a query. Alternatively, all records in the table can be deleted.
+      operationId: deleteRecords
+      parameters:
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - from
+              - where
+              type: object
+              properties:
+                from:
+                  $ref: '#/components/schemas/tableId'
+                where:
+                  description: The filter to delete records. To delete all records specify a filter that will include all records, for example {3.GT.0} where 3 is the ID of the Record ID field. Or supply a JSON array of Record IDs.
+                  anyOf:
+                  - minLength: 1
+                    type: string
+                    description: The filter to delete records. To delete all records specify a filter that will include all records, for example {3.GT.0} where 3 is the ID of the Record ID field.
+                    example: '{6.EX.''hello''}'
+                  - type: array
+                    minItems: 1
+                    maxItems: 50000
+                    items:
+                      type: integer
+                    description: An array of record IDs to delete.
+                    example:
+                    - 1
+                    - 2
+                    - 3
+              example:
+                from: bck7gp3q2
+                where: '{6.EX.''hello''}'
+        required: false
+      responses:
+        '200':
+          description: Successful delete records response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  numberDeleted:
+                    description: The number of records deleted.
+                    example: 1
+                    type: integer
+                example:
+                  numberDeleted: 1
+    servers:
+    - url: https://api.quickbase.com/v1
+  /records/query:
+    post:
+      tags:
+      - Records
+      summary: Query for data
+      description: Pass in a query in the Quickbase query language. Returns record data with intelligent pagination based on the approximate size of each record. The metadata object will include the necessary information to iterate over the response and gather more data.
+      operationId: runQuery
+      parameters:
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - from
+              type: object
+              properties:
+                options:
+                  type:
+                  - object
+                  - 'null'
+                  properties:
+                    skip:
+                      type: integer
+                      description: The number of records to skip.
+                    compareWithAppLocalTime:
+                      type: boolean
+                      description: Whether to run the query against a date time field with respect to the application's local time. The query is run with UTC time by default. This parameter is ignored when querying by ISO8601, which is always in UTC.
+                    top:
+                      type: integer
+                      description: The maximum number of records to display.
+                  description: Additional query options.
+                where:
+                  description: The filter, using the Quickbase query language, which determines the records to return. Or supply a JSON array of Record IDs. If this parameter is omitted, the query will return all records.
+                  anyOf:
+                  - type:
+                    - string
+                    - 'null'
+                    description: The filter, using the Quickbase query language, which determines the records to return.
+                    example: '{6.EX.''hello''}'
+                  - type: array
+                    minItems: 1
+                    maxItems: 50000
+                    items:
+                      type: integer
+                    description: An array of record IDs to retrieve.
+                    example:
+                    - 1
+                    - 2
+                    - 3
+                groupBy:
+                  type:
+                  - array
+                  - 'null'
+                  description: An array that contains the fields to group the records by.
+                  items:
+                    type: object
+                    properties:
+                      fieldId:
+                        x-preferred-type: integer
+                        oneOf:
+                        - type: integer
+                        - type: string
+                          pattern: ^\d+$
+                          minLength: 1
+                          maxLength: 10
+                        description: The unique identifier of a field in a table.
+                      grouping:
+                        type: string
+                        description: Group by based on ascending order (ASC), descending order (DESC) or equal values (equal-values)
+                        enum:
+                        - ASC
+                        - DESC
+                        - equal-values
+                sortBy:
+                  description: An array of field IDs and sort directions. If this attribute is not set or set to false, queries will be unsorted to improve performance.
+                  oneOf:
+                  - type:
+                    - array
+                    - 'null'
+                    items:
+                      type: object
+                      properties:
+                        fieldId:
+                          description: The unique identifier of a field in a table.
+                          x-preferred-type: integer
+                          oneOf:
+                          - type: integer
+                          - type: string
+                            pattern: ^\d+$
+                            minLength: 1
+                            maxLength: 10
+                        order:
+                          description: Sort based on ascending order (ASC), descending order (DESC) or equal values (equal-values)
+                          enum:
+                          - ASC
+                          - DESC
+                          - equal-values
+                          type: string
+                  - type:
+                    - boolean
+                    - 'null'
+                    enum:
+                    - false
+                select:
+                  type:
+                  - array
+                  - 'null'
+                  description: An array of field IDs for the fields that should be returned in the response. If empty, the default columns on the table will be returned.
+                from:
+                  $ref: '#/components/schemas/tableId'
+              description: If grouping or sorting is not set, records will not be sorted.
+              example:
+                from: bck7gp3q2
+                select:
+                - 1
+                - 2
+                - 3
+                where: '{1.CT.''hello''}'
+                sortBy:
+                - fieldId: 4
+                  order: ASC
+                - fieldId: 5
+                  order: ASC
+                groupBy:
+                - fieldId: 6
+                  grouping: equal-values
+                options:
+                  skip: 0
+                  top: 0
+                  compareWithAppLocalTime: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/runQueryResponse'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /records/modifiedSince:
+    post:
+      tags:
+      - Records
+      summary: Get records modified since
+      description: 'Checks for record changes on the current table and crawls the record dependency graph based on a provided field list. This determines if records on the table changed after the provided timestamp, when factoring in their dependencies. This API requires app admin permissions and only reviews lookup and summary fields in supported relationships.
+
+        To return deleted records for the current table, ''Index record changes'' must be enabled.
+
+        Dependent tables only evaluate current records, and deleted records are not supported.'
+      operationId: recordsModifiedSince
+      parameters:
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - after
+              - from
+              type: object
+              properties:
+                after:
+                  type: string
+                  format: date-time
+                  description: A timestamp, formatted in ISO-8601 UTC, representing the date and time to search.
+                  example: '2025-09-04T20:05:22Z'
+                fieldList:
+                  type:
+                  - array
+                  - 'null'
+                  description: List of field IDs. Each field is crawled across the entire record dependency graph to find its source record's date modified. If one is not provided, only the current table will be referenced.
+                  items:
+                    type: integer
+                includeDetails:
+                  type: boolean
+                  description: When true, the individual record IDs and timestamps will be returned. If false, only the count of changes will be returned.
+                from:
+                  $ref: '#/components/schemas/tableId'
+              example:
+                after: '2025-09-04T20:05:22Z'
+                fieldList:
+                - 1
+                - 2
+                - 3
+                from: bck7gp3q2
+                includeDetails: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  count: 2
+                  changes:
+                  - recordId: 1
+                    timestamp: '2025-09-04T20:10:22Z'
+                    changeType: MODIFY
+                  - recordId: 2
+                    timestamp: '2025-09-04T20:11:22Z'
+                    changeType: DELETE
+                required:
+                - count
+                properties:
+                  count:
+                    type: integer
+                    description: The count of changes found.
+                  changes:
+                    type: array
+                    description: When includeDetails is true, this array contains the individual record changes. If includeDetails is false, this array will not be returned.
+                    items:
+                      type: object
+                      properties:
+                        recordId:
+                          type: integer
+                          description: A record whose dependencies were found to have been updated after the time provided.
+                        timestamp:
+                          type: string
+                          format: date-time
+                          description: The timestamp that Quickbase found that exceeded the after time. This does not represent the latest date modified in the record graph.
+                        changeType:
+                          type: string
+                          description: The type of change that was detected.
+                          enum:
+                          - CREATE
+                          - MODIFY
+                          - DELETE
+                  deletesTruncated:
+                    type: boolean
+                    description: When true, this indicates that the number of deletes detected exceeded the limit and details could not be returned.
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    authorization:
+      name: Authorization
+      in: header
+      description: The Quickbase authentication scheme you are using to authenticate the request, as described on the [authorization page](../auth).
+      required: true
+      schema:
+        type: string
+      example: QB-USER-TOKEN xxxxxx_xxx_xxxxxxxxxxxxxxxxxxxxxxx
+    qbRealmHostname:
+      name: QB-Realm-Hostname
+      in: header
+      description: Your Quickbase domain, for example demo.quickbase.com
+      required: true
+      schema:
+        type: string
+      example: demo.quickbase.com
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+  schemas:
+    tableId:
+      type: string
+      pattern: ^(\w+\/\(\w+\)|\w+)$
+      description: The unique identifier (dbid) of the table.
+      example: bck7gp3q2
+    runQueryResponse:
+      example:
+        data:
+        - '6':
+            value: Andre Harris
+          '7':
+            value: 10
+          '8':
+            value: '2019-12-18T08:00:00Z'
+        fields:
+        - id: 6
+          label: Full Name
+          type: text
+        - id: 7
+          label: Amount
+          type: numeric
+        - id: 8
+          label: Date time
+          type: date time
+        metadata:
+          totalRecords: 10
+          numRecords: 1
+          numFields: 3
+          skip: 0
+      type: object
+      properties:
+        fields:
+          description: An array of objects that contains limited meta-data of each field displayed in the report. This assists in building logic that depends on field types and IDs.
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: Field id.
+                type: integer
+              label:
+                description: Field label.
+                type: string
+              type:
+                description: Field type.
+                type: string
+        data:
+          description: An array of objects that either represents the record data or summarized values, depending on the report type.
+          type: array
+        metadata:
+          description: Additional information about the results that may be helpful. Pagination may be needed if either you specify a smaller number of results to skip than is available, or if the API automatically returns fewer results. numRecords can be compared to totalRecords to determine if further pagination is needed.
+          type: object
+          required:
+          - numFields
+          - totalRecords
+          - numRecords
+          properties:
+            skip:
+              description: The number of records to skip
+              type: integer
+            numFields:
+              description: The number of fields in each record in the current response object
+              type: integer
+            top:
+              description: If present, the maximum number of records requested by the caller
+              type: integer
+            totalRecords:
+              description: The total number of records in the result set
+              type: integer
+            numRecords:
+              description: The number of records in the current response object
+              type: integer
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

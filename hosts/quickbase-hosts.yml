@@ -1,0 +1,194 @@
+generated: '2026-10-18'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 14
+  own: 12
+  other_domain: 0
+  platform: 2
+  roles:
+  - api
+  - community
+  - docs
+  - identity
+  - other
+  - portal
+  - source
+  - status
+  - website
+hosts:
+- host: api.quickbase.com
+  found_by:
+  - apis[]
+  - contract-discovery
+  types: []
+  serves:
+  - api
+  registrable_domain: quickbase.com
+  role: api
+  relation: own
+- host: careers.quickbase.com
+  found_by:
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: quickbase.com
+  role: other
+  relation: own
+- host: community.quickbase.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - Forum
+  serves: []
+  registrable_domain: quickbase.com
+  role: community
+  relation: own
+- host: developer.quickbase.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - docs-index
+  - spec-found
+  - vendor-detect
+  types:
+  - DeveloperPortal
+  - APIReference
+  - Authentication
+  serves:
+  - docs
+  - spec
+  - cdn
+  vendor: cloudfront
+  registrable_domain: quickbase.com
+  role: portal
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: help.quickbase.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  types:
+  - Deprecation
+  - GettingStarted
+  - Documentation
+  - HelpCenter
+  serves:
+  - docs
+  registrable_domain: quickbase.com
+  role: docs
+  relation: own
+- host: login.quickbase.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - well-known
+  types:
+  - Login
+  serves: []
+  registrable_domain: quickbase.com
+  role: identity
+  relation: own
+- host: payload-assets-us-west-2.marketing.quickbase.com
+  found_by:
+  - probed
+  - site-links
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: quickbase.com
+  role: other
+  relation: own
+- host: prod-us-west-2.marketing.quickbase.com
+  found_by:
+  - probed
+  - site-links
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: quickbase.com
+  role: other
+  relation: own
+- host: quickbase.com
+  found_by:
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: quickbase.com
+  role: other
+  relation: own
+- host: service.quickbase.com
+  found_by:
+  - pointer
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: quickbase.com
+  role: status
+  relation: own
+- host: team.quickbase.com
+  found_by:
+  - probed
+  - site-links
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: quickbase.com
+  role: other
+  relation: own
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: www.quickbase.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - vendor-detect
+  types:
+  - Compliance
+  - Security
+  - Website
+  - Support
+  - Blog
+  - Pricing
+  - SignUp
+  - TermsOfService
+  - PrivacyPolicy
+  serves:
+  - cdn
+  vendor: cloudflare
+  registrable_domain: quickbase.com
+  role: website
+  relation: own

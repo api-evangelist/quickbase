@@ -1,0 +1,1 @@
+{"authorization_servers":["https://glama.ai/"],"bearer_methods_supported":["header"],"resource":"https://glama.ai/","resource_documentation":"https://glama.ai/mcp/gateway","scopes_supported":["mcp"]}

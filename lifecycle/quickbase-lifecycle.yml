@@ -1,0 +1,16 @@
+generated: '2026-10-18'
+method: searched
+source: https://help.quickbase.com/docs/release-notes.md
+docs: https://help.quickbase.com/docs/release-notes.md
+versioning:
+  scheme: date-based
+  current_version: '2025-09-14'
+  policy: Release notes published monthly
+  docs: https://help.quickbase.com/docs/release-notes.md
+deprecation:
+  policy: Sandbox feature deprecated after June 2026
+  notice_period: Announced in April 2026 for June 2026 deprecation
+  docs: https://help.quickbase.com/docs/what-is-the-quickbase-sandbox.md
+status_page: https://service.quickbase.com/
+sla: Not specified in public documentation
+support_period: Not specified in public documentation

@@ -1,23 +1,564 @@
 aid: quickbase
+
 name: Quickbase
-description: 'Quickbase is a company surfaced via the API Evangelist harvest backlog (source: kin-score-markets)
-  and added to the network as a stub for full-pipeline profiling.'
+
+description: Quickbase is a no-code / low-code application platform for dynamic work and complex project management, letting business teams build
+  custom apps on shared data to improve their processes. Developers can access Quickbase apps programmatically through the Quickbase JSON RESTful
+  API (developer.quickbase.com, downloadable as OpenAPI), covering apps, tables, fields, reports, records, files, users, groups, audit and platform
+  analytics, alongside the legacy XML/HTTP API.
+
 url: https://raw.githubusercontent.com/api-evangelist/quickbase/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:kin-score-markets
-x-tier: stub
-x-tier-reason: harvest
+
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-18 (modular-v1; was harvest)
+
 specificationVersion: '0.20'
+
 created: '2026-10-18'
+
 modified: '2026-10-18'
+
 tags:
 - Company
-apis: []
+- Low-Code
+- No-Code
+- Application Development
+- Project Management
+- Workflow Automation
+- Databases
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
+image: https://payload-assets-us-west-2.marketing.quickbase.com/share-general-seo-image-eden%20(1)-1200x630.png
+
 common:
+- type: AgenticAccess
+  url: agentic-access/quickbase-agentic-access.yml
+- type: RateLimits
+  url: rate-limits/quickbase-rate-limits.yml
+- type: Plans
+  url: plans/quickbase-plans-pricing.yml
+- type: Spectral
+  url: rules/quickbase-rules.yml
+- type: JSONLD
+  url: json-ld/quickbase-context.jsonld
+- type: Vocabulary
+  url: vocabulary/quickbase-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Webhooks
+  url: asyncapi/quickbase-webhooks.yml
+- type: DataModel
+  url: data-model/quickbase-data-model.yml
+- type: Components
+  url: components/quickbase-components.yml
+- type: CLI
+  url: cli/quickbase-cli.yml
+- type: ChangeLog
+  url: changelog/quickbase-changelog.yml
+- type: Conventions
+  url: conventions/quickbase-conventions.yml
+- type: Sandbox
+  url: sandbox/quickbase-sandbox.yml
+- type: Compliance
+  url: https://www.quickbase.com/compliance
+- type: Security
+  url: https://www.quickbase.com/report-a-security-issue
+- type: Authentication
+  url: authentication/quickbase-authentication.yml
+- type: Deprecation
+  url: https://help.quickbase.com/docs/what-is-the-quickbase-sandbox.md
+- type: StatusPage
+  url: https://service.quickbase.com/
+- type: Lifecycle
+  url: lifecycle/quickbase-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/quickbase-problem-types.yml
+- type: Conformance
+  url: conformance/quickbase-conformance.yml
+- type: Overlay
+  url: overlays/quickbase-openapi-overlay.yaml
+- type: LLMsTxt
+  url: llms/quickbase-llms.txt
+- type: SecurityTxt
+  url: well-known/quickbase-security.txt
+- type: SecurityTxt
+  url: well-known/quickbase-quickbase-security.txt
+- type: WellKnown
+  url: well-known/quickbase-well-known.yml
+- type: Hosts
+  url: hosts/quickbase-hosts.yml
+- type: IntegrationEdges
+  url: integrations/quickbase-integration-edges.yml
+- type: Vendors
+  url: vendors/quickbase-vendors.yml
+- type: SDKs
+  url: packages/quickbase-packages.yml
+- type: Packages
+  url: packages/quickbase-packages.yml
+- type: GettingStarted
+  url: https://help.quickbase.com/docs/before-you-begin-user-setup
 - type: Website
-  url: https://quickbase.com
+  url: https://www.quickbase.com/
+- type: DeveloperPortal
+  url: https://developer.quickbase.com/
+- type: APIReference
+  url: https://developer.quickbase.com/
+- type: Documentation
+  url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+- type: Authentication
+  url: https://developer.quickbase.com/auth
+- type: Support
+  url: https://www.quickbase.com/support
+- type: HelpCenter
+  url: https://help.quickbase.com/
+- type: Forum
+  url: https://community.quickbase.com/
+- type: Blog
+  url: https://www.quickbase.com/blog
+- type: GitHubOrganization
+  url: https://github.com/QuickBase
+- type: Pricing
+  url: https://www.quickbase.com/plans-and-pricing
+- type: SignUp
+  url: https://www.quickbase.com/trial-register
+- type: Login
+  url: https://login.quickbase.com/
+- type: TermsOfService
+  url: https://www.quickbase.com/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.quickbase.com/privacy
+- type: LinkedIn
+  url: https://www.linkedin.com/company/quickbase
+- type: TrustCenter
+  url: security/quickbase-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/quickbase-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/quickbase-domain-security.yml
+
+apis:
+- aid: quickbase:quickbase-apps-api
+  name: Quickbase Apps API
+  description: The Apps API from Quickbase — 5 operation(s) for apps.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Apps
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-apps-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-audit-api
+  name: Quickbase Audit API
+  description: The Audit API from Quickbase — 1 operation(s) for audit.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Audit
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-audit-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-auth-api
+  name: Quickbase Auth API
+  description: The Auth API from Quickbase — 2 operation(s) for auth.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-auth-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-document-templates-api
+  name: Quickbase Document Templates API
+  description: The Document Templates API from Quickbase — 1 operation(s) for document templates.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Document Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-document-templates-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-fields-api
+  name: Quickbase Fields API
+  description: The Fields API from Quickbase — 4 operation(s) for fields.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-fields-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-files-api
+  name: Quickbase Files API
+  description: The Files API from Quickbase — 1 operation(s) for files.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-files-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-formulas-api
+  name: Quickbase Formulas API
+  description: The Formulas API from Quickbase — 1 operation(s) for formulas.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Formulas
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-formulas-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-groups-api
+  name: Quickbase Groups API
+  description: The Groups API from Quickbase — 3 operation(s) for groups.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-groups-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-platform-analytics-api
+  name: Quickbase Platform Analytics API
+  description: The Platform Analytics API from Quickbase — 2 operation(s) for platform analytics.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Platform Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-platform-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-records-api
+  name: Quickbase Records API
+  description: The Records API from Quickbase — 3 operation(s) for records.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Records
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-records-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-reports-api
+  name: Quickbase Reports API
+  description: The Reports API from Quickbase — 3 operation(s) for reports.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-reports-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-solutions-api
+  name: Quickbase Solutions API
+  description: The Solutions API from Quickbase — 8 operation(s) for solutions.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Solutions
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-solutions-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-tables-api
+  name: Quickbase Tables API
+  description: The Tables API from Quickbase — 5 operation(s) for tables.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-tables-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-trustees-api
+  name: Quickbase Trustees API
+  description: The Trustees API from Quickbase — 1 operation(s) for trustees.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Trustees
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-trustees-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-users-api
+  name: Quickbase Users API
+  description: The Users API from Quickbase — 5 operation(s) for users.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-users-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+- aid: quickbase:quickbase-user-token-api
+  name: Quickbase User Token API
+  description: The User Token API from Quickbase — 4 operation(s) for user token.
+  humanURL: https://developer.quickbase.com/
+  baseURL: https://api.quickbase.com/v1
+  tags:
+  - User Token
+  properties:
+  - type: OpenAPI
+    url: openapi/quickbase-user-token-api-openapi.yml
+  - type: Documentation
+    url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+  - type: JSONSchema
+    url: json-schema/quickbase-field-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-field-usage-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-app-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-report-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-table-response-schema.json
+  - type: JSONSchema
+    url: json-schema/quickbase-run-report-response-schema.json
+x-coverage:
+  state: covered
+  reason: enriched
+  detail: Apex https://quickbase.com answered the preflight browser UA with HTTP 429 (bot-challenge); www.quickbase.com serves readable HTML (200)
+    and is used as Website. Identity pointers verified by GET on 2026-10-18.
+  evidence:
+  - url: https://quickbase.com
+    status: 429
+  - url: https://www.quickbase.com/
+    status: 200
+  - url: https://developer.quickbase.com/
+    status: 200
+  - url: https://help.quickbase.com/docs/welcome-to-the-quickbase-api-guide
+    status: 200
+  - url: https://github.com/QuickBase
+    status: 200
+  - url: https://www.quickbase.com/terms-of-service
+    status: 200
+  - url: https://www.quickbase.com/trial-register
+    status: 200
+  - url: https://www.quickbase.com/support
+    status: 200
+  - url: https://community.quickbase.com/
+    status: 200
+  - url: https://login.quickbase.com/
+    status: 200
+x-enrichment:
+  date: '2026-10-18'
+  status: enriched
+  artifacts_added: 51
+  pass: modular-v1
+  engine: identity=anthropic,contract=anthropic,surfaces=anthropic,docs=deepseek,regulatory=anthropic

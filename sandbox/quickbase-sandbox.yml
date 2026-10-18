@@ -1,0 +1,17 @@
+generated: '2026-10-18'
+method: searched
+source: https://help.quickbase.com/docs/what-is-the-quickbase-sandbox.md
+docs: https://help.quickbase.com/docs/what-is-the-quickbase-sandbox.md
+description: Quickbase Sandbox is an area where IT, citizen developers, and business stakeholders can collaborate and implement change management controls for regulated or complex business mission-critical apps. It allows making a copy or sandbox version of a production app where you can test changes without affecting the actual app.
+features:
+- Create a sandbox with production data
+- Review and test app changes before applying to live app
+- Publish app changes made in sandbox to live app
+- Revert all schema changes made in sandbox
+- Invite other users to use the sandbox
+limitations:
+- Sandbox will no longer receive new features or technical support after June 2026
+- Does not currently support actions, webhooks, and connected tables
+- One sandbox per live app
+- Data limit up to 1 GB per app
+note: Quickbase recommends exploring Solutions as their updated approach to application lifecycle management instead of Sandbox.

@@ -1,0 +1,63 @@
+generated: '2026-10-18'
+method: searched
+generator: extract-docs-artifacts.py (deepseek)
+source: https://www.quickbase.com/plans-and-pricing
+sources:
+- https://www.quickbase.com/plans-and-pricing
+- https://help.quickbase.com/docs/plans-and-realms.md
+- https://help.quickbase.com/docs/quickbase-pricing-frequently-asked-questions.md
+- https://help.quickbase.com/docs/quickbase-pricing.md
+name: Quickbase pricing
+plans:
+- name: Free trial
+  price_text: Free access
+  price: 0
+  description: Free for 30 days
+  features:
+  - 30-day access
+  - Trial includes all Business Plan features
+- name: Team
+  price_text: Starts at $ 35 Per user, per month, priced annually
+  price: 35
+  description: Make teamwork faster, easier & more secure
+  features:
+  - Personalized dashboards & 13+ report types
+  - Communication & file management integrations
+  - Workflow automation
+  - User & data security controls
+  - Data encryption
+  - Audit logs
+  - Optional AI Intelligence Pack add-on
+  billing_period: month
+- name: Business
+  price_text: Starts at $ 55 Per user, per month, priced annually
+  price: 55
+  description: Connect people and tools effortlessly
+  features:
+  - All Team features
+  - Single sign-on & SCIM provisioning
+  - Point solution & workflow enhancement channels
+  - Gantt charts
+  - Sandbox
+  - FDA & HIPAA compliance
+  - Optional Quickbase Extensions add-on
+  - Optional AI Intelligence Pack add-on
+  billing_period: month
+- name: Enterprise
+  price_text: Contact us
+  description: Flexible and fully customizable
+  features:
+  - All Team & Business features
+  - Advanced performance tools
+  - Advanced data encryption
+  - On-prem connectivity & data warehouse integrations
+  - Optional Quickbase Extensions add-on
+audience: business-product
+pricing_basis: per-seat
+currency: USD
+delivery:
+  delivery: managed
+  evidence: Quickbase is a hosted SaaS platform
+note: The pricing is per user per month with annual billing. Pages mention "Cost shown does not include platform minimum" for Team and Business
+  plans. Enterprise plan requires contacting sales.
+docs: https://www.quickbase.com/plans-and-pricing

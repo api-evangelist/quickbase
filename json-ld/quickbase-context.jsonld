@@ -1,0 +1,289 @@
+{
+  "@context": {
+    "@vocab": "https://quickbase.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "quickbase": "https://quickbase.com/schema#",
+    "appVariable": "quickbase:appVariable",
+    "name": {
+      "@id": "quickbase:name",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "quickbase:value",
+      "@type": "xsd:string"
+    },
+    "appSecurityProperties": "quickbase:appSecurityProperties",
+    "hideFromPublic": {
+      "@id": "quickbase:hideFromPublic",
+      "@type": "xsd:boolean"
+    },
+    "mustBeRealmApproved": {
+      "@id": "quickbase:mustBeRealmApproved",
+      "@type": "xsd:boolean"
+    },
+    "allowClone": {
+      "@id": "quickbase:allowClone",
+      "@type": "xsd:boolean"
+    },
+    "useIPFilter": {
+      "@id": "quickbase:useIPFilter",
+      "@type": "xsd:boolean"
+    },
+    "allowExport": {
+      "@id": "quickbase:allowExport",
+      "@type": "xsd:boolean"
+    },
+    "enableAppTokens": {
+      "@id": "quickbase:enableAppTokens",
+      "@type": "xsd:boolean"
+    },
+    "memoryInfo": "quickbase:memoryInfo",
+    "estMemory": {
+      "@id": "quickbase:estMemory",
+      "@type": "xsd:decimal"
+    },
+    "estMemoryInclDependentApps": {
+      "@id": "quickbase:estMemoryInclDependentApps",
+      "@type": "xsd:decimal"
+    },
+    "appResponse": "quickbase:appResponse",
+    "ancestorId": {
+      "@id": "quickbase:ancestorId",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "quickbase:description",
+      "@type": "xsd:string"
+    },
+    "created": {
+      "@id": "quickbase:created",
+      "@type": "xsd:string"
+    },
+    "updated": {
+      "@id": "quickbase:updated",
+      "@type": "xsd:string"
+    },
+    "dateFormat": {
+      "@id": "quickbase:dateFormat",
+      "@type": "xsd:string"
+    },
+    "timeZone": {
+      "@id": "quickbase:timeZone",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "quickbase:id",
+      "@type": "xsd:string"
+    },
+    "hasEveryoneOnTheInternet": {
+      "@id": "quickbase:hasEveryoneOnTheInternet",
+      "@type": "xsd:boolean"
+    },
+    "variables": {
+      "@id": "quickbase:variables",
+      "@container": "@list"
+    },
+    "dataClassification": {
+      "@id": "quickbase:dataClassification",
+      "@type": "xsd:string"
+    },
+    "securityProperties": {
+      "@id": "quickbase:securityProperties",
+      "@type": "@id"
+    },
+    "tableResponse": "quickbase:tableResponse",
+    "alias": {
+      "@id": "quickbase:alias",
+      "@type": "xsd:string"
+    },
+    "nextRecordId": {
+      "@id": "quickbase:nextRecordId",
+      "@type": "xsd:integer"
+    },
+    "nextFieldId": {
+      "@id": "quickbase:nextFieldId",
+      "@type": "xsd:integer"
+    },
+    "defaultSortFieldId": {
+      "@id": "quickbase:defaultSortFieldId",
+      "@type": "xsd:integer"
+    },
+    "defaultSortOrder": {
+      "@id": "quickbase:defaultSortOrder",
+      "@type": "xsd:string"
+    },
+    "keyFieldId": {
+      "@id": "quickbase:keyFieldId",
+      "@type": "xsd:integer"
+    },
+    "singleRecordName": {
+      "@id": "quickbase:singleRecordName",
+      "@type": "xsd:string"
+    },
+    "pluralRecordName": {
+      "@id": "quickbase:pluralRecordName",
+      "@type": "xsd:string"
+    },
+    "sizeLimit": {
+      "@id": "quickbase:sizeLimit",
+      "@type": "xsd:string"
+    },
+    "spaceUsed": {
+      "@id": "quickbase:spaceUsed",
+      "@type": "xsd:string"
+    },
+    "spaceRemaining": {
+      "@id": "quickbase:spaceRemaining",
+      "@type": "xsd:string"
+    },
+    "tableInput": "quickbase:tableInput",
+    "relationshipResponse": "quickbase:relationshipResponse",
+    "parentTableId": {
+      "@id": "quickbase:parentTableId",
+      "@type": "xsd:string"
+    },
+    "childTableId": {
+      "@id": "quickbase:childTableId",
+      "@type": "xsd:string"
+    },
+    "foreignKeyField": {
+      "@id": "quickbase:foreignKeyField"
+    },
+    "isCrossApp": {
+      "@id": "quickbase:isCrossApp",
+      "@type": "xsd:boolean"
+    },
+    "lookupFields": {
+      "@id": "quickbase:lookupFields",
+      "@container": "@list"
+    },
+    "summaryFields": {
+      "@id": "quickbase:summaryFields",
+      "@container": "@list"
+    },
+    "updateRelationshipInput": "quickbase:updateRelationshipInput",
+    "lookupFieldIds": {
+      "@id": "quickbase:lookupFieldIds",
+      "@container": "@list"
+    },
+    "reportResponse": "quickbase:reportResponse",
+    "type": {
+      "@id": "quickbase:type",
+      "@type": "xsd:string"
+    },
+    "ownerId": {
+      "@id": "quickbase:ownerId",
+      "@type": "xsd:integer"
+    },
+    "query": {
+      "@id": "quickbase:query"
+    },
+    "properties": {
+      "@id": "quickbase:properties"
+    },
+    "usedLast": {
+      "@id": "quickbase:usedLast",
+      "@type": "xsd:string"
+    },
+    "usedCount": {
+      "@id": "quickbase:usedCount",
+      "@type": "xsd:integer"
+    },
+    "runReportResponse": "quickbase:runReportResponse",
+    "fields": {
+      "@id": "quickbase:fields",
+      "@container": "@list"
+    },
+    "data": {
+      "@id": "quickbase:data",
+      "@container": "@list"
+    },
+    "metadata": {
+      "@id": "quickbase:metadata"
+    },
+    "runQueryResponse": "quickbase:runQueryResponse",
+    "fieldResponse": "quickbase:fieldResponse",
+    "fieldType": {
+      "@id": "quickbase:fieldType",
+      "@type": "xsd:string"
+    },
+    "mode": {
+      "@id": "quickbase:mode",
+      "@type": "xsd:string"
+    },
+    "label": {
+      "@id": "quickbase:label",
+      "@type": "xsd:string"
+    },
+    "noWrap": {
+      "@id": "quickbase:noWrap",
+      "@type": "xsd:boolean"
+    },
+    "bold": {
+      "@id": "quickbase:bold",
+      "@type": "xsd:boolean"
+    },
+    "required": {
+      "@id": "quickbase:required",
+      "@type": "xsd:boolean"
+    },
+    "appearsByDefault": {
+      "@id": "quickbase:appearsByDefault",
+      "@type": "xsd:boolean"
+    },
+    "findEnabled": {
+      "@id": "quickbase:findEnabled",
+      "@type": "xsd:boolean"
+    },
+    "unique": {
+      "@id": "quickbase:unique",
+      "@type": "xsd:boolean"
+    },
+    "doesDataCopy": {
+      "@id": "quickbase:doesDataCopy",
+      "@type": "xsd:boolean"
+    },
+    "fieldHelp": {
+      "@id": "quickbase:fieldHelp",
+      "@type": "xsd:string"
+    },
+    "audited": {
+      "@id": "quickbase:audited",
+      "@type": "xsd:boolean"
+    },
+    "permissions": {
+      "@id": "quickbase:permissions",
+      "@container": "@list"
+    },
+    "userDenyResponse": "quickbase:userDenyResponse",
+    "failure": {
+      "@id": "quickbase:failure",
+      "@container": "@list"
+    },
+    "success": {
+      "@id": "quickbase:success",
+      "@container": "@list"
+    },
+    "userUndenyResponse": "quickbase:userUndenyResponse",
+    "groupMemberAddResponse": "quickbase:groupMemberAddResponse",
+    "groupMemberRemoveResponse": "quickbase:groupMemberRemoveResponse",
+    "subgroupAddResponse": "quickbase:subgroupAddResponse",
+    "subgroupRemoveResponse": "quickbase:subgroupRemoveResponse",
+    "trusteeInput": "quickbase:trusteeInput",
+    "roleId": {
+      "@id": "quickbase:roleId",
+      "@type": "xsd:integer"
+    },
+    "trusteeChangeResponse": "quickbase:trusteeChangeResponse",
+    "trusteeUpdateResponse": "quickbase:trusteeUpdateResponse"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Quickbase API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Quickbase's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-18) from openapi/quickbase-openapi.yml.",
+  "dcterms:created": "2026-10-18",
+  "dcterms:source": [
+    "openapi/quickbase-openapi.yml"
+  ]
+}

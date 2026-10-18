@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/quickbase/main/json-schema/quickbase-report-response-schema.json",
+  "title": "reportResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/quickbase-openapi.yml#/components/schemas/reportResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The identifier of the report, unique to the table."
+    },
+    "name": {
+      "type": "string",
+      "description": "The configured name of the report."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of report in Quickbase (e.g., chart)."
+    },
+    "description": {
+      "type": "string",
+      "description": "The configured description of a report."
+    },
+    "ownerId": {
+      "type": "integer",
+      "description": "Optional, showed only for personal reports. The user ID of report owner."
+    },
+    "query": {
+      "type": "object",
+      "properties": {
+        "tableId": {
+          "type": "string",
+          "description": "The table identifier for the report."
+        },
+        "filter": {
+          "type": "string",
+          "description": "Filter used to query for data."
+        },
+        "formulaFields": {
+          "type": "array",
+          "description": "Calculated formula fields.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "Formula field identifier."
+              },
+              "label": {
+                "type": "string",
+                "description": "Formula field label."
+              },
+              "fieldType": {
+                "type": "string",
+                "description": "Resulting formula value type.",
+                "enum": [
+                  "rich-text",
+                  "text",
+                  "numeric",
+                  "currency",
+                  "percent",
+                  "rating",
+                  "date",
+                  "timestamp",
+                  "timeofday",
+                  "duration",
+                  "checkbox",
+                  "phone",
+                  "email",
+                  "user",
+                  "multiuser",
+                  "url"
+                ]
+              },
+              "formula": {
+                "type": "string",
+                "description": "Formula text."
+              },
+              "decimalPrecision": {
+                "type": "integer",
+                "description": "For numeric formula the number precision."
+              }
+            }
+          }
+        }
+      },
+      "description": "The query definition as configured in Quickbase that gets executed when the report is run."
+    },
+    "properties": {
+      "type": "object",
+      "properties": {},
+      "description": "A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)"
+    },
+    "usedLast": {
+      "type": "string",
+      "description": "The instant at which a report was last used."
+    },
+    "usedCount": {
+      "type": "integer",
+      "description": "The number of times a report has been used."
+    }
+  }
+}

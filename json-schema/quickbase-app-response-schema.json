@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/quickbase/main/json-schema/quickbase-app-response-schema.json",
+  "title": "appResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/quickbase-openapi.yml#/components/schemas/appResponse",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "ancestorId": {
+      "description": "The id of the app from which this app was copied",
+      "type": "string"
+    },
+    "name": {
+      "description": "The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.",
+      "type": "string"
+    },
+    "description": {
+      "description": "The description for the app. If this property is left out, the app description will be blank.",
+      "type": "string"
+    },
+    "created": {
+      "description": "The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).",
+      "type": "string"
+    },
+    "updated": {
+      "description": "The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).",
+      "type": "string"
+    },
+    "dateFormat": {
+      "description": "A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.",
+      "type": "string"
+    },
+    "timeZone": {
+      "description": "A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.",
+      "type": "string"
+    },
+    "id": {
+      "description": "The unique identifier for this application.",
+      "type": "string"
+    },
+    "hasEveryoneOnTheInternet": {
+      "description": "Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/docs/sharing-apps-publicly)",
+      "type": "boolean"
+    },
+    "memoryInfo": {
+      "$ref": "#/$defs/memoryInfo"
+    },
+    "variables": {
+      "description": "The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/appVariable"
+      }
+    },
+    "dataClassification": {
+      "description": "The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None\".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.",
+      "type": "string"
+    },
+    "securityProperties": {
+      "$ref": "#/$defs/appSecurityProperties"
+    }
+  },
+  "$defs": {
+    "appSecurityProperties": {
+      "type": "object",
+      "properties": {
+        "hideFromPublic": {
+          "type": "boolean",
+          "description": "Hide from public application searches"
+        },
+        "mustBeRealmApproved": {
+          "type": "boolean",
+          "description": "Only \"approved\" users may access this application"
+        },
+        "allowClone": {
+          "type": "boolean",
+          "description": "Allow users who are not administrators to copy"
+        },
+        "useIPFilter": {
+          "type": "boolean",
+          "description": "Only users logging in from \"approved\" IP addresses may access this application"
+        },
+        "allowExport": {
+          "type": "boolean",
+          "description": "Allow users who are not administrators to export data"
+        },
+        "enableAppTokens": {
+          "type": "boolean",
+          "description": "Require Application Tokens"
+        }
+      },
+      "description": "Security properties of the application"
+    },
+    "appVariable": {
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name for the variable."
+        },
+        "value": {
+          "type": "string",
+          "description": "The value for the variable."
+        }
+      }
+    },
+    "memoryInfo": {
+      "type": "object",
+      "description": "Application memory info",
+      "properties": {
+        "estMemory": {
+          "type": "number",
+          "description": "The estimated memory of this application in gigabytes"
+        },
+        "estMemoryInclDependentApps": {
+          "type": "number",
+          "description": "The estimated memory of this application and all dependent applications in gigabytes"
+        }
+      }
+    }
+  }
+}

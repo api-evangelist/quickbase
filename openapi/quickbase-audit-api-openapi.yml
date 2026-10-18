@@ -1,0 +1,278 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Audit API
+  version: 1.0.0
+  description: 'Operations tagged Audit across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Audit
+paths:
+  /audit:
+    post:
+      tags:
+      - Audit
+      summary: Get audit logs
+      description: 'Gathers the audit logs for a single day from a realm. By default, this API returns 10,000 entries. This can be changed with the numRows parameter. Integrators can iterate through batches to get an entire day''s worth of logs. Each realm has a maximum entitlement of querying 1,000 days per year (allowing lookbacks for up to two years). Requests for paginated data do not count towards the annual limit. Transactional rate limits are 10 per 10 seconds.
+
+        **Note:** This API is available for enterprise users only.'
+      operationId: audit
+      parameters:
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nextToken:
+                  type: string
+                  description: Token specifying start of page. For first page don't supply this.
+                  example: '1000'
+                numRows:
+                  type: integer
+                  description: Number of logs to return per page, default is 10000, minimum is 1000, max is 50000.
+                  minimum: 1000
+                  maximum: 50000
+                  example: 10000
+                queryId:
+                  type: string
+                  description: The query id of an audit log request. This id is needed to fetch subsequent paged results of a single query.
+                  example: c41aa90e-0db6-4732-8e22-2ef80fe4092a
+                date:
+                  type: string
+                  description: The date for which audit logs need to be fetched. This must be date-time only, as YYYY-MM-DD, and a valid date in the past.
+                  format: date
+                  example: '2022-05-23'
+                topics:
+                  type: array
+                  maxItems: 20
+                  description: An array that may contain up to 20 [topics](https://resources.quickbase.com/nav/app/budurkasx/action/showpage/2b2941e4-f34d-4d41-9b0e-db790d20e9ab?pageIdV2=quickbase.com-DashboardGroup-15760d74-2243-4ce9-9495-7cc8790f12e7) to filter by. If empty, all topics are returned.
+                  items:
+                    type: string
+              example:
+                date: '2022-05-20'
+                topics:
+                - login
+                - login_fail
+      responses:
+        '200':
+          description: Query ran successfully and has returned the events for the given time period.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - queryId
+                properties:
+                  queryId:
+                    description: Query id of the requested audit log.
+                    type: string
+                  events:
+                    description: All events of the audit log.
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - id
+                      - firstname
+                      - lastname
+                      - email
+                      - topic
+                      - time
+                      - ipaddress
+                      - useragent
+                      - application
+                      - description
+                      properties:
+                        id:
+                          description: Log ID.
+                          type: string
+                        firstname:
+                          description: User's first name.
+                          type: string
+                        lastname:
+                          description: User's last name.
+                          type: string
+                        email:
+                          description: User's email address.
+                          type: string
+                        topic:
+                          description: What action was taken, such as log in, create app, report access, or table search.
+                          type: string
+                        time:
+                          description: Exact time the action was taken, including date, and time with hour, minutes and seconds. Time zone is the browser time zone.
+                          type: string
+                        ipaddress:
+                          description: The IP address the action was taken from.
+                          type: string
+                        useragent:
+                          description: The browser and OS the action was taken from.
+                          type: string
+                        application:
+                          description: UI for user interface or API for an API call.
+                          type: string
+                        description:
+                          description: A brief description of the action that you can click to see additional details.
+                          type: string
+                        payloadChanges:
+                          description: The data changes that have occured to a field that has been marked as audited.
+                          type: object
+                          required:
+                          - changes
+                          - rid
+                          - changeType
+                          - type
+                          properties:
+                            changes:
+                              description: An object describing the changes that occured on record changes.
+                              type: object
+                              required:
+                              - fields
+                              properties:
+                                current:
+                                  description: The current value of the fields that have been changed.
+                                  type: array
+                                  items:
+                                    type: object
+                                    required:
+                                    - value
+                                    - id
+                                    properties:
+                                      id:
+                                        description: The id of the field
+                                        type: integer
+                                      value:
+                                        description: The value of the field
+                                        type: string
+                                      printValue:
+                                        description: Optional printable value
+                                        type: string
+                                previous:
+                                  description: The previous value of the fields that have been changed.
+                                  type: array
+                                  items:
+                                    type: object
+                                    required:
+                                    - value
+                                    - id
+                                    properties:
+                                      id:
+                                        description: The id of the field
+                                        type: integer
+                                      value:
+                                        description: The value of the field
+                                        type: string
+                                      printValue:
+                                        description: Optional printable value
+                                        type: string
+                                fields:
+                                  description: The list of fields and their types that have been changed.
+                                  type: array
+                                  items:
+                                    type: object
+                                    required:
+                                    - field
+                                    - type
+                                    - id
+                                    properties:
+                                      id:
+                                        description: The id of the field
+                                        type: integer
+                                      name:
+                                        description: The name of the field
+                                        type: string
+                                      type:
+                                        description: The type of the field
+                                        type: string
+                            rid:
+                              description: The recordId that has been edited.
+                              type: integer
+                            changeType:
+                              description: The change type that occured for a record. Could be one of add, edit, delete.
+                              type: string
+                            type:
+                              description: A placeholder for type changes.
+                              type: string
+                  nextToken:
+                    description: Token to fetch the next 1000 logs.
+                    type: string
+                example:
+                  events:
+                  - firstname: Jon
+                    lastname: Doe
+                    email: jdoe@quickbase.com
+                    ipaddress: 65.219.241.162
+                    application: UI
+                    resourceurl: https://demo.quickbase.com/db/bpqe82s1
+                    sessioninfo: 'Session ID: 17245317'
+                    useragent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Safari/605.1.15
+                    topic: app_dashboard_access
+                    description: Jon Doe accessed the app dashboard in app Projects
+                    id: I3g8gm2cmh-1
+                    time: '2020-04-21T14:41:51.886Z'
+                  nextToken: 6a.f12x
+                  queryId: 797c0726-f8f4-4df9-883f-c7e8cbdf2f77.ALtInpuyQeBoW+fWrAqLrjPGqDqPl++IMb3bOxlmoF4=
+        '202':
+          description: Query still being processed. Pass the queryId back to the API to check for results.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - queryId
+                properties:
+                  queryId:
+                    description: Query id of the requested audit log.
+                    type: string
+                example:
+                  queryId: 797c0726-f8f4-4df9-883f-c7e8cbdf2f77.ALtInpuyQeBoW+fWrAqLrjPGqDqPl++IMb3bOxlmoF4=
+        '409':
+          description: Another query is already running for this date, and it has not progressed far enough to be polled yet. Retry the same request in a few minutes.
+          content:
+            application/json:
+              schema:
+                description: The error response will be in the [standard format](../errors).
+                example:
+                  message: Conflict
+                  description: Another audit query is already running for this date. Please retry in a few minutes.
+                type: object
+                properties:
+                  message:
+                    description: The type of error found.
+                    type: string
+                  description:
+                    description: The description for the occurence of the error.
+                    type: string
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    authorization:
+      name: Authorization
+      in: header
+      description: The Quickbase authentication scheme you are using to authenticate the request, as described on the [authorization page](../auth).
+      required: true
+      schema:
+        type: string
+      example: QB-USER-TOKEN xxxxxx_xxx_xxxxxxxxxxxxxxxxxxxxxxx
+    qbRealmHostname:
+      name: QB-Realm-Hostname
+      in: header
+      description: Your Quickbase domain, for example demo.quickbase.com
+      required: true
+      schema:
+        type: string
+      example: demo.quickbase.com
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

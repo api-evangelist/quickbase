@@ -1,0 +1,142 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Auth API
+  version: 1.0.0
+  description: 'Operations tagged Auth across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Auth
+paths:
+  /auth/temporary/{dbid}:
+    get:
+      tags:
+      - Auth
+      summary: Get a temporary token for a dbid
+      description: Use this endpoint to get a temporary authorization token, scoped to either an app or a table. It can only be used inside of code pages for client-side authentication because it relies on the browser session. Learn more about extending Quickbase. You can then use this token to make other API calls (see authorization). This token expires in 5 minutes.
+      operationId: getTempTokenDBID
+      parameters:
+      - name: dbid
+        in: path
+        description: The unique identifier of an app or table.
+        required: true
+        schema:
+          type: string
+          minLength: 1
+        example: bp2ryku2u
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - name: QB-App-Token
+        in: header
+        description: Your Quickbase app token
+        schema:
+          type: string
+        example: apptoken
+      responses:
+        '200':
+          description: This token is used in the authorization header value (similar to the QB-USER-TOKEN), except it uses the QB-TEMP-TOKEN prefix header['Authorization'] = 'QB-TEMP-TOKEN {token}'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  temporaryAuthorization: token
+                properties:
+                  temporaryAuthorization:
+                    description: Temporary authorization token.
+                    type: string
+    servers:
+    - url: https://api.quickbase.com/v1
+  /auth/oauth/token:
+    post:
+      tags:
+      - Auth
+      summary: Exchange an SSO token
+      description: Use this endpoint to exchange a SAML assertion for a Quickbase token following RFC 8693. Callers can choose to return a token compatible with SCIM, XML, or RESTful APIs. The token duration is determined by the SAML timeout session time. You must be able to create a SAML assertion in your code to use this endpoint. The SAML assertion is verified against the configuration on the realm. Learn more about about SAML assertions.
+      operationId: exchangeSsoToken
+      parameters:
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - grant_type
+              - subject_token
+              - subject_token_type
+              - requested_token_type
+              properties:
+                grant_type:
+                  type: string
+                  description: The value `urn:ietf:params:oauth:grant-type:token-exchange` indicates that a token exchange is being performed.
+                  enum:
+                  - urn:ietf:params:oauth:grant-type:token-exchange
+                requested_token_type:
+                  type: string
+                  description: An identifier for the type of the requested security token. For the RESTful API, use `urn:quickbase:params:oauth:token-type:temp_token`. For the XML or SCIM APIs use `urn:quickbase:params:oauth:token-type:temp_ticket`.
+                  enum:
+                  - urn:quickbase:params:oauth:token-type:temp_ticket
+                  - urn:quickbase:params:oauth:token-type:temp_token
+                subject_token:
+                  type: string
+                  description: A security token that represents the identity of the party on behalf of whom the request is being made. For SAML 2.0, the value should be a base64url-encoded SAML 2.0 assertion.
+                subject_token_type:
+                  type: string
+                  description: An identifier that indicates the type of the security token in the `subject_token` parameter.
+                  enum:
+                  - urn:ietf:params:oauth:token-type:saml2
+              example:
+                grant_type: urn:ietf:params:oauth:grant-type:token-exchange
+                requested_token_type: urn:quickbase:params:oauth:token-type:temp_ticket
+                subject_token: PHNhbWxwOlJlc3BvbnNlDQogICAgeG1sbnM6c2FtbHA9bjp...
+                subject_token_type: urn:ietf:params:oauth:token-type:saml2
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  access_token: example_token_1NiIsImtpZCI6IjllciJ9w
+                  issued_token_type: urn:quickbase:params:oauth:token-type:temp_ticket
+                  token_type: N_A
+                properties:
+                  access_token:
+                    type: string
+                    description: The security token issued by the authorization server in response to the token exchange request. The identifier `access_token` is used for historical reasons and the issued token need not be an OAuth access token.
+                  issued_token_type:
+                    type: string
+                    description: An identifier for the representation of the issued security token.
+                    enum:
+                    - urn:quickbase:params:oauth:token-type:temp_ticket
+                    - urn:quickbase:params:oauth:token-type:temp_token
+                  token_type:
+                    type: string
+                    description: Will always return `N_A`
+                    enum:
+                    - N_A
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    qbRealmHostname:
+      name: QB-Realm-Hostname
+      in: header
+      description: Your Quickbase domain, for example demo.quickbase.com
+      required: true
+      schema:
+        type: string
+      example: demo.quickbase.com
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

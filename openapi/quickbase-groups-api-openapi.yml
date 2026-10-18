@@ -1,0 +1,329 @@
+openapi: 3.2.0
+info:
+  title: Quickbase Groups API
+  version: 1.0.0
+  description: 'Operations tagged Groups across 2 of this provider''s published API definitions: qb-openapi-v3.json, quickbase-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quickbase.com/v1
+tags:
+- name: Groups
+paths:
+  /groups/{gid}/members:
+    post:
+      tags:
+      - Groups
+      summary: Add members
+      description: Adds a list of users to a given group as members.
+      operationId: addMembersToGroup
+      parameters:
+      - $ref: '#/components/parameters/pathGroupId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: A list of user IDs that will be added to a group.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userInput'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/groupMemberAddResponse'
+    delete:
+      tags:
+      - Groups
+      summary: Remove members
+      description: Removes a list of members from a given group.
+      operationId: removeMembersFromGroup
+      parameters:
+      - $ref: '#/components/parameters/pathGroupId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: A list of user IDs that will be removed from a group.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userInput'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/groupMemberRemoveResponse'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /groups/{gid}/managers:
+    post:
+      tags:
+      - Groups
+      summary: Add managers
+      description: Adds a list of users to a given group as managers.
+      operationId: addManagersToGroup
+      parameters:
+      - $ref: '#/components/parameters/pathGroupId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: A list of user IDs that will be added to a group.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userInput'
+        required: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/groupMemberAddResponse'
+    delete:
+      tags:
+      - Groups
+      summary: Remove managers
+      description: Removes a list of managers from a given group.
+      operationId: removeManagersFromGroup
+      parameters:
+      - $ref: '#/components/parameters/pathGroupId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: A list of user IDs that will be removed from a group.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userInput'
+        required: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/groupMemberRemoveResponse'
+    servers:
+    - url: https://api.quickbase.com/v1
+  /groups/{gid}/subgroups:
+    post:
+      tags:
+      - Groups
+      summary: Add child groups
+      description: Adds a list of groups to a given group.
+      operationId: addSubgroupsToGroup
+      parameters:
+      - $ref: '#/components/parameters/pathGroupId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: A list of group IDs that will be added to a group.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/groupInput'
+        required: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subgroupAddResponse'
+    delete:
+      tags:
+      - Groups
+      summary: Remove child groups
+      description: Removes a list of groups from a given group.
+      operationId: removeSubgroupsFromGroup
+      parameters:
+      - $ref: '#/components/parameters/pathGroupId'
+      - $ref: '#/components/parameters/qbRealmHostname'
+      - $ref: '#/components/parameters/userAgent'
+      - $ref: '#/components/parameters/authorization'
+      requestBody:
+        description: A list of group IDs that will be removed from a group.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/groupInput'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subgroupRemoveResponse'
+    servers:
+    - url: https://api.quickbase.com/v1
+components:
+  parameters:
+    authorization:
+      name: Authorization
+      in: header
+      description: The Quickbase authentication scheme you are using to authenticate the request, as described on the [authorization page](../auth).
+      required: true
+      schema:
+        type: string
+      example: QB-USER-TOKEN xxxxxx_xxx_xxxxxxxxxxxxxxxxxxxxxxx
+    qbRealmHostname:
+      name: QB-Realm-Hostname
+      in: header
+      description: Your Quickbase domain, for example demo.quickbase.com
+      required: true
+      schema:
+        type: string
+      example: demo.quickbase.com
+    userAgent:
+      name: User-Agent
+      in: header
+      description: This is entered by the person or utility invoking the API. You might custom create this or use the default one of your toolkit. Being descriptive here may offer more identification and troubleshooting capabilities.
+      schema:
+        type: string
+      example: FileService_Integration_V2.1
+    pathGroupId:
+      name: gid
+      in: path
+      description: This is the ID of the group being modified.
+      required: true
+      schema:
+        type: number
+      example: 1011
+  schemas:
+    groupInput:
+      maxItems: 1000
+      minItems: 1
+      type: array
+      description: A list of group IDs that will be added to a group.
+      example:
+      - 1002.czm8
+      - 1003.bar3
+      items:
+        type: string
+        description: The Id and its hash value of the child group to be added to a group.
+    groupMemberAddResponse:
+      example:
+        failure:
+        - 123456.ryyw
+        - 423123.b3x5
+        success:
+        - 100000.be8s
+      type: object
+      required:
+      - failure
+      - success
+      properties:
+        failure:
+          description: A list of users that couldn't be added to the group. This includes a list of IDs that represent invalid users and users who have already been added to the group.
+          example:
+          - 423123.b3x5
+          - 123456.ryyw
+          type: array
+          items:
+            type: string
+        success:
+          description: A list of users that have been added to the group successfully.
+          example:
+          - 100000.be8s
+          type: array
+          items:
+            type: string
+    subgroupRemoveResponse:
+      example:
+        failure:
+        - 1002.czm8
+        success:
+        - 1003.bar3
+      type: object
+      required:
+      - failure
+      - success
+      properties:
+        failure:
+          description: A list of child groups that couldn't be removed from the group. This includes a list of IDs that represent invalid groups.
+          example:
+          - 1002.czm8
+          type: array
+          items:
+            type: string
+        success:
+          description: A list of child groups that have been removed from the group successfully.
+          example:
+          - 1003.bar3
+          type: array
+          items:
+            type: string
+    subgroupAddResponse:
+      example:
+        failure:
+        - 1002.czm8
+        success:
+        - 1003.bar3
+      type: object
+      required:
+      - failure
+      - success
+      properties:
+        failure:
+          description: A list of child groups that couldn't be added to the group. This includes a list of IDs that represent invalid groups and groups that have already been added to the group.
+          example:
+          - 1002.czm8
+          type: array
+          items:
+            type: string
+        success:
+          description: A list of child groups that have been added to the group successfully.
+          example:
+          - 1003.bar3
+          type: array
+          items:
+            type: string
+    userInput:
+      maxItems: 1000
+      minItems: 1
+      type: array
+      description: A list of user IDs.
+      example:
+      - 123456.ab1s
+      - 423123.vc2d
+      - 78910.ba1s
+      items:
+        type: string
+    groupMemberRemoveResponse:
+      example:
+        failure:
+        - 123456.ryyw
+        - 423123.b3x5
+        success:
+        - 100000.be8s
+      type: object
+      required:
+      - failure
+      - success
+      properties:
+        failure:
+          description: A list of users that couldn't be removed from the group. This includes a list of IDs that represent invalid users.
+          example:
+          - 423123.b3x5
+          - 123456.ryyw
+          type: array
+          items:
+            type: string
+        success:
+          description: A list of users that have been removed from the group successfully.
+          example:
+          - 100000.be8s
+          type: array
+          items:
+            type: string
+x-refined-from:
+- qb-openapi-v3.json
+- quickbase-openapi.yml

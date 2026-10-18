@@ -1,0 +1,244 @@
+generated: '2026-10-18'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/quickbase-openapi.yml
+vocabulary:
+  name: Quickbase Domain Vocabulary
+  description: 'Terms declared by Quickbase''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-18'
+  terms:
+  - term: appVariable
+    definition: 'Object declared by the contract with fields: name, value.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/appVariable
+  - term: appVariables
+    definition: The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/appVariables
+  - term: appSecurityProperties
+    definition: Security properties of the application
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/appSecurityProperties
+  - term: memoryInfo
+    definition: Application memory info
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/memoryInfo
+  - term: appResponse
+    definition: 'Object declared by the contract with fields: ancestorId, name, description, created, updated, dateFormat, timeZone, id, hasEveryoneOnTheInternet,
+      memoryInfo, variables, dataClassification. (1 more)'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/appResponse
+  - term: tableResponse
+    definition: 'Object declared by the contract with fields: name, id, alias, description, created, updated, nextRecordId, nextFieldId, defaultSortFieldId,
+      defaultSortOrder, keyFieldId, singleRecordName. (4 more)'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/tableResponse
+  - term: tableInput
+    definition: The example below shows all the properties that can be changed with this request. Additional properties that you can see with
+      the corresponding GET request cannot be set through this API.
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/tableInput
+  - term: relationshipResponse
+    definition: 'Object declared by the contract with fields: id, parentTableId, childTableId, foreignKeyField, isCrossApp, lookupFields, summaryFields.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/relationshipResponse
+  - term: updateRelationshipInput
+    definition: 'Object declared by the contract with fields: summaryFields, lookupFieldIds.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/updateRelationshipInput
+  - term: reportResponse
+    definition: 'Object declared by the contract with fields: id, name, type, description, ownerId, query, properties, usedLast, usedCount.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/reportResponse
+  - term: runReportResponse
+    definition: 'Object declared by the contract with fields: fields, data, metadata.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/runReportResponse
+  - term: runQueryResponse
+    definition: 'Object declared by the contract with fields: fields, data, metadata.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/runQueryResponse
+  - term: fieldResponse
+    definition: 'Object declared by the contract with fields: id, fieldType, mode, label, noWrap, bold, required, appearsByDefault, findEnabled,
+      unique, doesDataCopy, fieldHelp. (3 more)'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/fieldResponse
+  - term: userInput
+    definition: A list of user IDs.
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/userInput
+  - term: userDenyResponse
+    definition: 'Object declared by the contract with fields: failure, success.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/userDenyResponse
+  - term: userUndenyResponse
+    definition: 'Object declared by the contract with fields: failure, success.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/userUndenyResponse
+  - term: groupMemberAddResponse
+    definition: 'Object declared by the contract with fields: failure, success.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/groupMemberAddResponse
+  - term: groupMemberRemoveResponse
+    definition: 'Object declared by the contract with fields: failure, success.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/groupMemberRemoveResponse
+  - term: groupInput
+    definition: A list of group IDs that will be added to a group.
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/groupInput
+  - term: subgroupAddResponse
+    definition: 'Object declared by the contract with fields: failure, success.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/subgroupAddResponse
+  - term: subgroupRemoveResponse
+    definition: 'Object declared by the contract with fields: failure, success.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/subgroupRemoveResponse
+  - term: appId
+    definition: The unique identifier (dbid) of the app.
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/appId
+  - term: tableId
+    definition: The unique identifier (dbid) of the table.
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/tableId
+  - term: tableIdSimple
+    definition: The unique identifier (dbid) of the table.
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/tableIdSimple
+  - term: trusteeInput
+    definition: Object used for operations to read, create, or update trustees in an app.
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/trusteeInput
+  - term: trusteeList
+    definition: A list of trustees. Each trustee is represented by an object containing the trustee's ID, type, and role ID.
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/trusteeList
+  - term: trusteeChangeResponse
+    definition: 'Object declared by the contract with fields: failure, success.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/trusteeChangeResponse
+  - term: trusteeUpdateList
+    definition: A list of trustees to be updated in an app. Each trustee is represented by an object containing the trustee's ID, type, and role
+      ID.
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/trusteeUpdateList
+  - term: trusteeUpdateResponse
+    definition: 'Object declared by the contract with fields: failure, success.'
+    tags:
+    - Object
+    source: openapi/quickbase-openapi.yml#/components/schemas/trusteeUpdateResponse
+  - term: Apps
+    definition: 'Resource group in the contract; its operation POST /apps: Creates an application in an account.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Tables
+    definition: 'Resource group in the contract; its operation GET /tables: Gets a list of all the tables that exist in a specific application.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Reports
+    definition: 'Resource group in the contract; its operation GET /reports: Get the schema (properties) of all reports for a table.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Fields
+    definition: 'Resource group in the contract; its operation GET /fields: Gets the properties for all fields in a specific table.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Formulas
+    definition: 'Resource group in the contract; its operation POST /formula/run: Allows running a formula via an API call.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Records
+    definition: 'Resource group in the contract; its operation POST /records: Insert and/or update record(s) in a table.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Auth
+    definition: 'Resource group in the contract; its operation GET /auth/temporary/{dbid}: Use this endpoint to get a temporary authorization
+      token, scoped to either an app or a table.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: UserToken
+    definition: 'Resource group in the contract; its operation POST /usertoken/clone: Clones the authenticated user token.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Files
+    definition: 'Resource group in the contract; its operation GET /files/{tableId}/{recordId}/{fieldId}/{versionNumber}: Downloads the file attachment,
+      with the file attachment content encoded in base64 format.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Users
+    definition: 'Resource group in the contract; its operation POST /users: Get all users in an account or narrowed down list of users filtered
+      by email(s).'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Groups
+    definition: 'Resource group in the contract; its operation POST /groups/{gid}/members: Adds a list of users to a given group as members.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Audit
+    definition: 'Resource group in the contract; its operation POST /audit: Gathers the audit logs for a single day from a realm.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Platform Analytics
+    definition: 'Resource group in the contract; its operation GET /analytics/reads: Get user read and integration read summaries for any day
+      in the past.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Document Templates
+    definition: 'Resource group in the contract; its operation GET /docTemplates/{templateId}/generate: Generates a document from a template.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Solutions
+    definition: 'Resource group in the contract; its operation GET /solutions/{solutionId}: Returns the QBL for the specified solution.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml
+  - term: Trustees
+    definition: 'Resource group in the contract; its operation GET /app/{appId}/trustees: Returns the list of trustees for a specific application.'
+    tags:
+    - Resource Group
+    source: openapi/quickbase-openapi.yml

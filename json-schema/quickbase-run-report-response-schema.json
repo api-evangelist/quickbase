@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/quickbase/main/json-schema/quickbase-run-report-response-schema.json",
+  "title": "runReportResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/quickbase-openapi.yml#/components/schemas/runReportResponse",
+  "type": "object",
+  "properties": {
+    "fields": {
+      "description": "An array of objects that contains limited meta-data of each field displayed in the report. This assists in building logic that depends on field types and IDs.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Field id.",
+            "type": "integer"
+          },
+          "label": {
+            "description": "Field label.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Field type.",
+            "type": "string"
+          },
+          "labelOverride": {
+            "description": "Column heading label override for field in report.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "data": {
+      "description": "An array of objects that either represents the record data or summarized values, depending on the report type.",
+      "type": "array"
+    },
+    "metadata": {
+      "description": "Additional information about the results that may be helpful. Pagination may be needed if either you specify a smaller number of results to skip than is available, or if the API automatically returns fewer results. numRecords can be compared to totalRecords to determine if further pagination is needed.",
+      "type": "object",
+      "required": [
+        "numFields",
+        "totalRecords",
+        "numRecords"
+      ],
+      "properties": {
+        "skip": {
+          "description": "The number of records to skip",
+          "type": "integer"
+        },
+        "numFields": {
+          "description": "The number of fields in each record in the current response object",
+          "type": "integer"
+        },
+        "top": {
+          "description": "If present, the maximum number of records requested by the caller",
+          "type": "integer"
+        },
+        "totalRecords": {
+          "description": "The total number of records in the result set",
+          "type": "integer"
+        },
+        "numRecords": {
+          "description": "The number of records in the current response object",
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

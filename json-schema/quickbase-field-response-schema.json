@@ -1,0 +1,411 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/quickbase/main/json-schema/quickbase-field-response-schema.json",
+  "title": "fieldResponse",
+  "x-generated": "2026-10-18",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/quickbase-openapi.yml#/components/schemas/fieldResponse",
+  "required": [
+    "id"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "The id of the field, unique to this table.",
+      "format": "int64"
+    },
+    "fieldType": {
+      "type": "string",
+      "description": "The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html)."
+    },
+    "mode": {
+      "type": "string",
+      "description": "For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank."
+    },
+    "label": {
+      "type": "string",
+      "description": "The label (name) of the field."
+    },
+    "noWrap": {
+      "type": "boolean",
+      "description": "Indicates if the field is configured to not wrap when displayed in the product."
+    },
+    "bold": {
+      "type": "boolean",
+      "description": "Indicates if the field is configured to display in bold in the product."
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Indicates if the field is marked required."
+    },
+    "appearsByDefault": {
+      "type": "boolean",
+      "description": "Indicates if the field is marked as a default in reports."
+    },
+    "findEnabled": {
+      "type": "boolean",
+      "description": "Indicates if the field is marked as searchable."
+    },
+    "unique": {
+      "type": "boolean",
+      "description": "Indicates if the field is marked unique."
+    },
+    "doesDataCopy": {
+      "type": "boolean",
+      "description": "Indicates if the field data will copy when a user copies the record."
+    },
+    "fieldHelp": {
+      "type": "string",
+      "description": "The configured help text shown to users within the product."
+    },
+    "audited": {
+      "type": "boolean",
+      "description": "Indicates if the field is being tracked as part of Quickbase Audit Logs."
+    },
+    "properties": {
+      "type": "object",
+      "properties": {
+        "comments": {
+          "type": "string",
+          "description": "The comments entered on the field properties by an administrator."
+        },
+        "doesTotal": {
+          "type": "boolean",
+          "description": "Whether this field totals in reports within the product."
+        },
+        "autoSave": {
+          "type": "boolean",
+          "description": "Whether the link field will auto save."
+        },
+        "defaultValueLuid": {
+          "type": "integer",
+          "description": "Default user id value."
+        },
+        "useI18NFormat": {
+          "type": "boolean",
+          "description": "Whether phone numbers should be in E.164 standard international format."
+        },
+        "maxVersions": {
+          "type": "integer",
+          "description": "The maximum number of versions configured for a file attachment."
+        },
+        "carryChoices": {
+          "type": "boolean",
+          "description": "Whether the field should carry its multiple choice fields when copied."
+        },
+        "format": {
+          "type": "integer",
+          "description": "The format to display time."
+        },
+        "maxLength": {
+          "type": "integer",
+          "description": "The maximum number of characters allowed for entry in Quickbase for this field."
+        },
+        "linkText": {
+          "type": "string",
+          "description": "The configured text value that replaces the URL that users see within the product."
+        },
+        "parentFieldId": {
+          "type": "integer",
+          "description": "The id of the parent composite field, when applicable."
+        },
+        "displayTimezone": {
+          "type": "boolean",
+          "description": "Indicates whether to display the timezone within the product."
+        },
+        "summaryTargetFieldId": {
+          "type": "integer",
+          "description": "The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn't require a field selection (like count)."
+        },
+        "allowNewChoices": {
+          "type": "boolean",
+          "description": "Indicates if users can add new choices to a selection list."
+        },
+        "masterChoiceFieldId": {
+          "type": "integer",
+          "description": "The id of the field that is the reference in the relationship."
+        },
+        "defaultToday": {
+          "type": "boolean",
+          "description": "Indicates if the field value is defaulted today for new records."
+        },
+        "units": {
+          "type": "string",
+          "description": "The units label."
+        },
+        "lookupTargetFieldId": {
+          "type": "integer",
+          "description": "The id of the field that is the target on the master table for this lookup."
+        },
+        "summaryFunction": {
+          "type": "string",
+          "description": "The summary accumulation function type.",
+          "enum": [
+            "AVG",
+            "SUM",
+            "MAX",
+            "MIN",
+            "STD-DEV",
+            "COUNT",
+            "COMBINED-TEXT",
+            "COMBINED-USER",
+            "DISTINCT-COUNT"
+          ]
+        },
+        "sourceFieldId": {
+          "type": "integer",
+          "description": "The id of the source field."
+        },
+        "masterTableTag": {
+          "type": "string",
+          "description": "The table alias for the master table in the relationship this field is part of."
+        },
+        "doesAverage": {
+          "type": "boolean",
+          "description": "Whether this field averages in reports within the product."
+        },
+        "formula": {
+          "type": "string",
+          "description": "The formula of the field as configured in Quickbase."
+        },
+        "decimalPlaces": {
+          "type": "integer",
+          "description": "The number of decimal places displayed in the product for this field."
+        },
+        "defaultCountryCode": {
+          "type": "string",
+          "description": "Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format."
+        },
+        "seeVersions": {
+          "type": "boolean",
+          "description": "Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product."
+        },
+        "displayMonth": {
+          "type": "string",
+          "description": "How to display months."
+        },
+        "numLines": {
+          "type": "integer",
+          "description": "The number of lines shown in Quickbase for this text field."
+        },
+        "displayEmail": {
+          "type": "string",
+          "description": "How the email is displayed."
+        },
+        "defaultKind": {
+          "type": "string",
+          "description": "The user default type."
+        },
+        "coverText": {
+          "type": "string",
+          "description": "An alternate user friendly text that can be used to display a link in the browser."
+        },
+        "currencySymbol": {
+          "type": "string",
+          "description": "The current symbol used when displaying field values within the product."
+        },
+        "masterChoiceTableId": {
+          "type": "string",
+          "description": "The id of the table that is the master in this relationship."
+        },
+        "targetFieldId": {
+          "type": "integer",
+          "description": "The id of the target field."
+        },
+        "displayUser": {
+          "type": "string",
+          "description": "The configured option for how users display within the product."
+        },
+        "blankIsZero": {
+          "type": "boolean",
+          "description": "Whether a blank value is treated the same as 0 in calculations within the product."
+        },
+        "exact": {
+          "type": "boolean",
+          "description": "Whether an exact match is required for a report link."
+        },
+        "startField": {
+          "type": "integer",
+          "description": "The start field id."
+        },
+        "defaultDomain": {
+          "type": "string",
+          "description": "Default email domain."
+        },
+        "defaultValue": {
+          "type": "string",
+          "description": "The default value configured for a field when a new record is added."
+        },
+        "choicesLuid": {
+          "type": "array",
+          "description": "List of user choices."
+        },
+        "abbreviate": {
+          "type": "boolean",
+          "description": "Don't show the URL protocol when showing the URL."
+        },
+        "xmlTag": {
+          "type": "string",
+          "description": "The field's xml tag."
+        },
+        "targetTableName": {
+          "type": "string",
+          "description": "The field's target table name."
+        },
+        "numberFormat": {
+          "type": "integer",
+          "description": "The format used for displaying numeric values in the product (decimal, separators, digit group)."
+        },
+        "appearsAs": {
+          "type": "string",
+          "description": "The link text, if empty, the url will be used as link text."
+        },
+        "width": {
+          "type": "integer",
+          "description": "The field's html input width in the product."
+        },
+        "currencyFormat": {
+          "type": "string",
+          "description": "The currency format used when displaying field values within the product.",
+          "enum": [
+            "left",
+            "right",
+            "middle"
+          ]
+        },
+        "foreignKey": {
+          "type": "boolean",
+          "description": "Indicates if the field is a foreign key (or reference field) in a relationship."
+        },
+        "displayDayOfWeek": {
+          "type": "boolean",
+          "description": "Indicates whether to display the day of the week within the product."
+        },
+        "summaryReferenceFieldId": {
+          "type": "integer",
+          "description": "The id of the field that is the reference in the relationship for this summary.",
+          "format": "int64"
+        },
+        "commaStart": {
+          "type": "integer",
+          "description": "The number of digits before commas display in the product, when applicable."
+        },
+        "choices": {
+          "type": "array",
+          "description": "An array of entries that exist for a field that offers choices to the user.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "targetTableId": {
+          "type": "string",
+          "description": "The id of the target table."
+        },
+        "displayRelative": {
+          "type": "boolean",
+          "description": "Whether to display time as relative."
+        },
+        "compositeFields": {
+          "type": "array",
+          "description": "An array of the fields that make up a composite field (e.g., address)."
+        },
+        "displayCheckboxAsText": {
+          "type": "boolean",
+          "description": "Indicates whether the checkbox values will be shown as text in reports."
+        },
+        "versionMode": {
+          "type": "string",
+          "description": "Version modes for files. Keep all versions vs keep last version.",
+          "enum": [
+            "keepallversions",
+            "keeplastversions"
+          ]
+        },
+        "displayTime": {
+          "type": "boolean",
+          "description": "Indicates whether to display the time, in addition to the date."
+        },
+        "durationField": {
+          "type": "integer",
+          "description": "The duration field id."
+        },
+        "snapFieldId": {
+          "type": "integer",
+          "description": "The id of the field that is used to snapshot values from, when applicable."
+        },
+        "hours24": {
+          "type": "boolean",
+          "description": "Indicates whether or not to display time in the 24-hour format within the product."
+        },
+        "sortAlpha": {
+          "type": "boolean",
+          "description": "Whether to sort alphabetically, default sort is by record ID."
+        },
+        "sortAsGiven": {
+          "type": "boolean",
+          "description": "Indicates if the listed entries sort as entered vs alphabetically."
+        },
+        "hasExtension": {
+          "type": "boolean",
+          "description": "Whether this field has a phone extension."
+        },
+        "workWeek": {
+          "type": "integer",
+          "description": "The work week type."
+        },
+        "useNewWindow": {
+          "type": "boolean",
+          "description": "Indicates if the URL should open a new window when a user clicks it within the product."
+        },
+        "postTempToken": {
+          "type": "boolean",
+          "description": "POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)"
+        },
+        "appendOnly": {
+          "type": "boolean",
+          "description": "Whether this field is append only."
+        },
+        "displayAsLink": {
+          "type": "boolean",
+          "description": "Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product."
+        },
+        "allowHTML": {
+          "type": "boolean",
+          "description": "Whether this field allows html."
+        },
+        "allowMentions": {
+          "description": "If someone can @mention users in the rich text field to generate an email notification.",
+          "type": "boolean"
+        },
+        "lookupReferenceFieldId": {
+          "type": "integer",
+          "description": "The id of the field that is the reference in the relationship for this lookup."
+        }
+      },
+      "description": "Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type."
+    },
+    "permissions": {
+      "type": "array",
+      "description": "Field Permissions for different roles.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "The role associated with a given permission for the field"
+          },
+          "permissionType": {
+            "type": "string",
+            "description": "The permission given to the role for this field"
+          },
+          "roleId": {
+            "type": "integer",
+            "description": "The Id of the given role"
+          }
+        }
+      }
+    }
+  }
+}

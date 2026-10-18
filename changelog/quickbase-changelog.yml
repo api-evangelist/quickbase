@@ -1,0 +1,66 @@
+generated: '2026-10-18'
+method: searched
+generator: extract-docs-artifacts.py (deepseek)
+source: https://help.quickbase.com/docs/release-notes.md
+sources:
+- https://help.quickbase.com/docs/release-notes.md
+- https://help.quickbase.com/docs/release-notes-2025.md
+- https://help.quickbase.com/docs/quickbase-september-2025-release-notes.md
+- https://help.quickbase.com/docs/quickbase-august-2025-release-notes.md
+entries:
+- date: '2025-09-14'
+  highlights:
+  - Release notes are moving to our new Quickbase release notes app—a better way to stay informed about Quickbase updates that are important to
+    you.
+  - A Quickbase Excel Add-in will be available by September 30 (previously expected by September 5) in the official Microsoft Office Add-ins Store.
+  - You can now directly access Quickbase AI product help within the technical support portal.
+  - We're releasing a single API to simplify finding records modified since a certain time.
+  breaking: false
+- date: '2025-08-17'
+  highlights:
+  - Starting next month, Quickbase release notes will be available in a new Quickbase app.
+  - A Quickbase Excel Add-in will be available by September 30 (previously expected by September 5) in the official Microsoft AppSource (Office
+    Add-ins Store).
+  - We're adding a realm alias to assist when customers need to change their realm name.
+  - We're providing four new REST API endpoints for managing trustees (users, user groups, and email domains) at an app level.
+  breaking: false
+- date: '2025-07-20'
+  highlights:
+  - Our new Quickbase University experience is here.
+  - We improved how Quickbase redirects users providing an invalid realm/subdomain.
+  - We added an estimated number of calculations to the dependency diagram.
+  breaking: false
+- date: '2025-06-22'
+  highlights:
+  - Get product updates directly in Quickbase with these new in-product features.
+  - We released a major improvement to navigating between new UI pages.
+  breaking: false
+- date: '2025-05-18'
+  highlights:
+  - We've made some visual updates to the My Apps page.
+  - As part of those updates, we've removed the Give feedback button that was previously available on the My Apps page.
+  breaking: false
+- date: '2025-04-13'
+  highlights:
+  - Updated forms experience on Quickbase Mobile will become generally available on April 21.
+  - Our updated forms experience (previously only available on desktop) will become generally available.
+  breaking: false
+- date: '2025-03-16'
+  highlights:
+  - Starting March 31, we're introducing AI-powered Quickbase help, designed to make tapping into Quickbase's help resources easier than ever.
+  breaking: false
+- date: '2025-02-09'
+  highlights:
+  - Quick Insights is now generally available.
+  - Use it to view predictive analytics powered by Data Studio.
+  breaking: false
+- date: '2025-01-12'
+  highlights:
+  - Quickbase now offers three regex (short for regular expression) functions in our formula language.
+  - A regex is a pattern made up of characters that can be used to match, search, and replace text.
+  breaking: false
+scheme: monthly
+current_version: September 2025
+note: Release notes are moving to a new Quickbase app starting October 2025. All new release notes will only be available in the app from October
+  onward.
+docs: https://help.quickbase.com/docs/release-notes.md
