@@ -22,3 +22,126 @@
   relationship: connector-listing
   status: not-a-workflow
   arazzo: null
+- slug: quickbase-meltano
+  label: Meltano
+  partner: meltano
+  partner_name: Meltano
+  type: marketplace
+  marketplace: meltano-hub
+  channel: elt-connector
+  evidence: https://hub.meltano.com/extractors/tap-quickbase--flash716
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: Meltano Hub (github.com/meltano/hub _data/meltano extractors + loaders)
+    spec_file: null
+    role: elt-connector:meltano-hub
+    registered_name: Quickbase
+    matched_domain: quickbase.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-19'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    plugins:
+    - tap-quickbase--flash716
+    - tap-quickbase--mainspringenergy
+    - tap-quickbase--singer-io
+    maintenance_status:
+    - active
+    - unknown
+    quality:
+    - bronze
+    - silver
+    - unknown
+    builder: 'community (Meltano Hub variant maintainers: flash716, mainspringenergy, singer-io)'
+  status: not-a-workflow
+  arazzo: null
+- slug: quickbase-bluebeam-own
+  label: Bluebeam (own)
+  partner: bluebeam
+  partner_name: Bluebeam (own)
+  category: Construction Management
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://integrations.bluebeam.com/apps/quickbase/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: quickbase-zapier
+  label: Zapier
+  partner: zapier
+  partner_name: Zapier
+  type: marketplace
+  marketplace: zapier-directory
+  channel: ipaas-listing
+  evidence: https://zapier.com/apps/quickbase/integrations
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: Zapier app directory (zapier.com/api/v4/apps)
+    spec_file: null
+    role: ipaas-connector:zapier
+    registered_name: Quickbase
+    matched_domain: quickbase.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-20'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: quickbase
+    beta: false
+    builder: unknown (not in the directory record)
+  status: not-a-workflow
+  arazzo: null
+- slug: quickbase-n8n
+  label: n8n
+  partner: n8n
+  partner_name: n8n
+  type: marketplace
+  marketplace: n8n-nodes-base
+  channel: open-source-node
+  evidence: https://github.com/n8n-io/n8n/tree/f73dc337f8dc61a4fd44aebe41c55faafe4f53a4/packages/nodes-base/nodes/QuickBase
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: n8n built-in nodes (n8n-io/n8n packages/nodes-base)
+    spec_file: null
+    role: ipaas-connector:n8n-nodes-base
+    registered_name: Quick Base
+    matched_domain: quickbase.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-20'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    node_path: QuickBase
+    trigger: false
+    builder: n8n (built-in node)
+  status: not-a-workflow
+  arazzo: null
+- slug: quickbase-pipedream
+  label: Pipedream
+  partner: pipedream
+  partner_name: Pipedream
+  type: marketplace
+  marketplace: pipedream-components
+  channel: open-source-node
+  evidence: https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/quickbase
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: Pipedream components (PipedreamHQ/pipedream components/)
+    spec_file: null
+    role: ipaas-connector:pipedream
+    registered_name: quickbase
+    matched_domain: quickbase.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-20'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: quickbase
+    actions: true
+    sources: true
+    builder: Pipedream repo (component)
+  status: not-a-workflow
+  arazzo: null

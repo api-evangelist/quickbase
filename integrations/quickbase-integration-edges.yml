@@ -3,12 +3,17 @@ method: searched
 source:
 - https://www.quickbase.com/exchange
 checked:
+- bluebeam/integrations/bluebeam-integration-edges.yml
 - https://composio.dev/toolkits/quickbase
+- https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/
+- https://github.com/meltano/hub
+- https://github.com/n8n-io/n8n/tree/f73dc337f8dc61a4fd44aebe41c55faafe4f53a4/packages/nodes-base/nodes/
 - https://help.quickbase.com/docs/understand-integrations.md
 - https://monid.ai/tools/quickbase
 - https://n8n.io/integrations/quickbase/
 - https://www.quickbase.com/exchange
 - https://www.quickbase.com/product/integrations
+- https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/quickbase/integrations
 summary: null
 marketplace_apps:
@@ -71,6 +76,133 @@ edges:
   - Workflow enhancement integration
   - Financial software integration
   - Enterprise system integration
+- partner_name: Meltano
+  partner: meltano
+  partner_match: aggregator
+  type: marketplace
+  marketplace: meltano-hub
+  channel: elt-connector
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://hub.meltano.com/extractors/tap-quickbase--flash716
+  category: null
+  contract_reference:
+    register: Meltano Hub (github.com/meltano/hub _data/meltano extractors + loaders)
+    spec_file: null
+    role: elt-connector:meltano-hub
+    registered_name: Quickbase
+    matched_domain: quickbase.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-19'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    plugins:
+    - tap-quickbase--flash716
+    - tap-quickbase--mainspringenergy
+    - tap-quickbase--singer-io
+    maintenance_status:
+    - active
+    - unknown
+    quality:
+    - bronze
+    - silver
+    - unknown
+    builder: 'community (Meltano Hub variant maintainers: flash716, mainspringenergy, singer-io)'
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-19'
+- partner_name: Bluebeam (own)
+  partner: bluebeam
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://integrations.bluebeam.com/apps/quickbase/
+  mirror_of: bluebeam/integrations/bluebeam-integration-edges.yml
+  apps:
+  - Quickbase
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
+  category: Construction Management
+- partner_name: Zapier
+  partner: zapier
+  partner_match: aggregator
+  type: marketplace
+  marketplace: zapier-directory
+  channel: ipaas-listing
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://zapier.com/apps/quickbase/integrations
+  category: null
+  contract_reference:
+    register: Zapier app directory (zapier.com/api/v4/apps)
+    spec_file: null
+    role: ipaas-connector:zapier
+    registered_name: Quickbase
+    matched_domain: quickbase.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-20'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: quickbase
+    beta: false
+    builder: unknown (not in the directory record)
+  detected_by: sweep-workflow-automation.py
+  first_seen: '2026-10-20'
+- partner_name: n8n
+  partner: n8n
+  partner_match: aggregator
+  type: marketplace
+  marketplace: n8n-nodes-base
+  channel: open-source-node
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://github.com/n8n-io/n8n/tree/f73dc337f8dc61a4fd44aebe41c55faafe4f53a4/packages/nodes-base/nodes/QuickBase
+  category: null
+  contract_reference:
+    register: n8n built-in nodes (n8n-io/n8n packages/nodes-base)
+    spec_file: null
+    role: ipaas-connector:n8n-nodes-base
+    registered_name: Quick Base
+    matched_domain: quickbase.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-20'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    node_path: QuickBase
+    trigger: false
+    builder: n8n (built-in node)
+  detected_by: sweep-workflow-automation.py
+  first_seen: '2026-10-20'
+- partner_name: Pipedream
+  partner: pipedream
+  partner_match: aggregator
+  type: marketplace
+  marketplace: pipedream-components
+  channel: open-source-node
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/quickbase
+  category: null
+  contract_reference:
+    register: Pipedream components (PipedreamHQ/pipedream components/)
+    spec_file: null
+    role: ipaas-connector:pipedream
+    registered_name: quickbase
+    matched_domain: quickbase.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-20'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: quickbase
+    actions: true
+    sources: true
+    builder: Pipedream repo (component)
+  detected_by: sweep-workflow-automation.py
+  first_seen: '2026-10-20'
 templates: []
 note: Quickbase has its own app marketplace (Quickbase Exchange) with 103 apps and claims 40+ pre-built integrations
   with third-party tools.
